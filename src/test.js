@@ -7,7 +7,7 @@ import { Wireframe } from 'three/addons/Wireframe.js';
 import { WireframeGeometry2 } from 'three/addons/WireframeGeometry2.js';
 
 
-let camera, controls, geo, object, matLine, renderer, scene, postProcessing, wireframe;
+let camera, controls, geo, geo2, object, matLine, matLine2, renderer, scene, postProcessing, wireframe, wireframe2;
 
 init();
 
@@ -22,7 +22,7 @@ function init() {
     //
 
     camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 1, 2000 );
-    camera.position.z = 800;
+    camera.position.z = 600;
 
     scene = new THREE.Scene();
     //scene.fog = new THREE.Fog( 0x000000, 1, 1000 );
@@ -44,15 +44,19 @@ function init() {
 
     }
 
+    //first box
+
     geo = new THREE.BoxGeometry( 500, 500, 500, 20,20,20 );
 
 	const geometry2 = new WireframeGeometry2( geo );
 
 	matLine = new LineMaterial( {
 
-		color: 0xFFFFFF,
+		color: 0xFF00FF,
         linewidth: 1, // in pixels
-        dashed: false
+        opacity: 0.5,
+        dashed: false,
+        transparent: true
 
     } );
 
@@ -60,6 +64,28 @@ function init() {
     wireframe.computeLineDistances();
     wireframe.scale.set( 1, 1, 1 );
     scene.add( wireframe );
+
+    // second box
+
+    geo2 = new THREE.BoxGeometry( 500, 500, 500, 20,20,20 );
+
+	const geometry3 = new WireframeGeometry2( geo2 );
+
+	matLine2 = new LineMaterial( {
+
+		color: 0xFFFF00,
+        linewidth: 1, // in pixels
+        opacity: 0.5,
+        dashed: false,
+        transparent: true
+
+    } );
+
+    wireframe2 = new Wireframe( geometry3, matLine2 );
+    wireframe2.computeLineDistances();
+    wireframe2.scale.set( 1, 1, 1 );
+    wireframe2.position.set(0,0,-500);
+    scene.add( wireframe2 );
 
     scene.add( new THREE.AmbientLight( 0xcccccc ) );
 
