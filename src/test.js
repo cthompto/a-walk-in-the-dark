@@ -163,10 +163,10 @@ function animate() {
     object.rotation.y += 0.005;
     renderer.render( scene, camera );
     if (camera.position.z < zTarget) {
-        camera.position.z ++;
+        camera.position.z = camera.position.z + 5;
         cameraMove = true;
     } else if (camera.position.z > zTarget) {
-        camera.position.z --;
+        camera.position.z = camera.position.z - 5;
         cameraMove = true;
     } else {
         cameraMove = false;
