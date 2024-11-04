@@ -7,7 +7,9 @@ import { Wireframe } from 'three/addons/Wireframe.js';
 import { WireframeGeometry2 } from 'three/addons/WireframeGeometry2.js';
 
 
-let camera, controls, geo, geo2, object, matLine, matLine2, renderer, scene, postProcessing, wireframe, wireframe2;
+let camera, cameraMove, zTarget, controls, geo, geo2, geo3, object, matLine, matLine2, matLine3, renderer, scene, postProcessing, wireframe, wireframe2, wireframe3;
+
+
 
 init();
 
@@ -21,8 +23,8 @@ function init() {
 
     //
 
-    camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 1, 2000 );
-    camera.position.z = 600;
+    camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 1, 1000 );
+    camera.position.z = 750;
 
     scene = new THREE.Scene();
     //scene.fog = new THREE.Fog( 0x000000, 1, 1000 );
@@ -54,7 +56,7 @@ function init() {
 
 		color: 0xFF00FF,
         linewidth: 1, // in pixels
-        opacity: 0.5,
+        opacity: 0.25,
         dashed: false,
         transparent: true
 
@@ -75,7 +77,7 @@ function init() {
 
 		color: 0xFFFF00,
         linewidth: 1, // in pixels
-        opacity: 0.5,
+        opacity: 0.25,
         dashed: false,
         transparent: true
 
@@ -84,8 +86,30 @@ function init() {
     wireframe2 = new Wireframe( geometry3, matLine2 );
     wireframe2.computeLineDistances();
     wireframe2.scale.set( 1, 1, 1 );
-    wireframe2.position.set(0,0,-500);
+    wireframe2.position.set(0,0,-1000);
     scene.add( wireframe2 );
+
+    // third box
+
+    geo3 = new THREE.BoxGeometry( 500, 500, 500, 20,20,20 );
+
+	const geometry4 = new WireframeGeometry2( geo3 );
+
+	matLine3 = new LineMaterial( {
+
+		color: 0x00FFFF,
+        linewidth: 1, // in pixels
+        opacity: 0.25,
+        dashed: false,
+        transparent: true
+
+    } );
+
+    wireframe3 = new Wireframe( geometry4, matLine3 );
+    wireframe3.computeLineDistances();
+    wireframe3.scale.set( 1, 1, 1 );
+    wireframe3.position.set(0,0,-2000);
+    scene.add( wireframe3 );
 
     scene.add( new THREE.AmbientLight( 0xcccccc ) );
 
@@ -107,6 +131,24 @@ function init() {
 
     window.addEventListener( 'resize', onWindowResize );
 
+    document.addEventListener( 'keyup' , forward);
+
+}
+
+function forward(e) {
+    console.log('key logged')
+    if (!cameraMove) {
+        if (e.key == 'w') {
+            zTarget = camera.position.z-1000;
+            //camera.position.z = camera.position.z-1000;
+            console.log('w');
+            console.log(zTarget);
+        } else if (e.key == 's') {
+            zTarget = camera.position.z+1000;
+            //camera.position.z = camera.position.z+1000;
+            console.log('s');
+        }
+    }
 }
 
 function onWindowResize() {
@@ -120,4 +162,13 @@ function animate() {
     object.rotation.x += 0.005;
     object.rotation.y += 0.005;
     renderer.render( scene, camera );
+    if (camera.position.z < zTarget) {
+        camera.position.z ++;
+        cameraMove = true;
+    } else if (camera.position.z > zTarget) {
+        camera.position.z --;
+        cameraMove = true;
+    } else {
+        cameraMove = false;
+    }
 }
