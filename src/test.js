@@ -147,6 +147,7 @@ function forward(e) {
             zTarget = camera.position.z+1000;
             //camera.position.z = camera.position.z+1000;
             console.log('s');
+            console.log(zTarget);
         }
     }
 }
