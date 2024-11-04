@@ -3,7 +3,7 @@ import {
 	UniformsUtils
 } from 'three';
 import { Pass, FullScreenQuad } from './Pass.js';
-import { DotScreenShader } from '../shaders/DotScreenShader.js';
+import { DotScreenShader } from './DotScreenShader.js';
 
 class DotScreenPass extends Pass {
 
