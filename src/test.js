@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 //import { pass } from 'three/tsl';
 //import { DotScreenPass } from 'three/addons/DotScreenPass.js';
+import { FontLoader } from 'three/addons/FontLoader.js';
 import { OrbitControls } from 'three/addons/OrbitControls.js';
 import { LineMaterial } from 'three/addons/LineMaterial.js';
 import { Wireframe } from 'three/addons/Wireframe.js';
@@ -27,10 +28,14 @@ function init() {
     camera.position.z = 750;
 
     scene = new THREE.Scene();
-    //scene.fog = new THREE.Fog( 0x000000, 1, 1000 );
+    scene.fog = new THREE.Fog( 0x000000, 250, 2000 );
+    scene.background =  new THREE.Color( 0x151515 );
 
     object = new THREE.Object3D();
     scene.add( object );
+
+
+    // objects in first box
 
     const geometry = new THREE.SphereGeometry( 1, 4, 4 );
     const material = new THREE.MeshPhongMaterial( { color: 0x000000, flatShading: true } );
@@ -46,9 +51,30 @@ function init() {
 
     }
 
+    // text in second box
+
+    const loader = new FontLoader();
+    loader.load('../assets/fonts/Quantico/Quantico_Bold.json', function ( font ) {
+        const fontColor = 0xffffff;
+        const fontMat = new THREE.LineBasicMaterial( {
+            color: fontColor,
+            side: THREE.DoubleSide
+        } );
+
+        const message = ' A Walk in The Dark'
+        const shapes = font.generateShapes( message, 25 );
+        const fontGeo = new THREE.ShapeGeometry( shapes );
+        fontGeo.computeBoundingBox();
+        const xMid = - 0.5 * ( fontGeo.boundingBox.max.x - fontGeo.boundingBox.min.x );
+		fontGeo.translate( xMid, 0, 0 );
+        const text = new THREE.Mesh( fontGeo, fontMat );
+		text.position.z = 250;
+		scene.add( text );
+    })
+
     //first box
 
-    geo = new THREE.BoxGeometry( 500, 500, 500, 20,20,20 );
+    geo = new THREE.BoxGeometry( 1000, 500, 500, 40,20,20 );
 
 	const geometry2 = new WireframeGeometry2( geo );
 
@@ -69,7 +95,7 @@ function init() {
 
     // second box
 
-    geo2 = new THREE.BoxGeometry( 500, 500, 500, 20,20,20 );
+    geo2 = new THREE.BoxGeometry( 1000, 500, 500, 40,20,20 );
 
 	const geometry3 = new WireframeGeometry2( geo2 );
 
@@ -91,7 +117,7 @@ function init() {
 
     // third box
 
-    geo3 = new THREE.BoxGeometry( 500, 500, 500, 20,20,20 );
+    geo3 = new THREE.BoxGeometry( 1000, 500, 500, 40,20,20 );
 
 	const geometry4 = new WireframeGeometry2( geo3 );
 
@@ -125,7 +151,7 @@ function init() {
     controls.screenSpacePanning = false;
 
     controls.minDistance = 100;
-    controls.maxDistance = 1000;
+    controls.maxDistance = 10000;
 
     controls.maxPolarAngle = Math.PI / 2;
 
