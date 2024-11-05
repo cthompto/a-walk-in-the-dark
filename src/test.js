@@ -16,13 +16,13 @@ init();
 
 function init() {
 
+    // step scene
+
     renderer = new THREE.WebGLRenderer( { antialias: true } );
     renderer.setPixelRatio( window.devicePixelRatio );
     renderer.setSize( window.innerWidth, window.innerHeight );
     renderer.setAnimationLoop( animate );
     document.body.appendChild( renderer.domElement );
-
-    //
 
     camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 1, 1000 );
     camera.position.z = 750;
@@ -51,7 +51,7 @@ function init() {
 
     }
 
-    // text in second box
+    // title text
 
     const loader = new FontLoader();
     loader.load('../assets/fonts/Quantico/Quantico_Bold.json', function ( font ) {
@@ -137,31 +137,38 @@ function init() {
     wireframe3.position.set(0,0,-2000);
     scene.add( wireframe3 );
 
+    // lighting
+
     scene.add( new THREE.AmbientLight( 0xcccccc ) );
 
     const light = new THREE.DirectionalLight( 0xffffff, 3 );
     light.position.set( 1, 1, 1 );
     scene.add( light );
 
+    // orbit controls for debugging
+
     controls = new OrbitControls( camera, renderer.domElement );
     controls.listenToKeyEvents( window );
     controls.enableDamping = true;
     controls.dampingFactor = 0.05;
-
     controls.screenSpacePanning = false;
-
     controls.minDistance = 100;
     controls.maxDistance = 10000;
-
     controls.maxPolarAngle = Math.PI / 2;
+
+    // window resizer
 
     window.addEventListener( 'resize', onWindowResize );
 
-    document.addEventListener( 'keyup' , forward);
+    // main controls (forward and backward)
+
+    document.addEventListener( 'keyup' , cameraMovement);
 
 }
 
-function forward(e) {
+// function for moving the camera a set distance on key press
+
+function cameraMovement(e) {
     console.log('key logged')
     if (!cameraMove) {
         if (e.key == 'w') {
@@ -178,12 +185,16 @@ function forward(e) {
     }
 }
 
+// function for resizing scene when the window resizes
+
 function onWindowResize() {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
 
     renderer.setSize( window.innerWidth, window.innerHeight );
 }
+
+// animation and render loop
 
 function animate() {
     object.rotation.x += 0.005;
