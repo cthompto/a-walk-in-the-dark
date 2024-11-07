@@ -8,8 +8,7 @@ import { Wireframe } from 'three/addons/Wireframe.js';
 import { WireframeGeometry2 } from 'three/addons/WireframeGeometry2.js';
 
 
-let camera, cameraMove, zTarget, controls, geo, geo2, geo3, object, matLine, matLine2, matLine3, renderer, scene, postProcessing, wireframe, wireframe2, wireframe3;
-
+let camera, cameraMove, zTarget, controls, geo, geo2, geo3, object, matLine, matLine2, matLine3, plane, planeFrame, planeMat, planeWire, renderer, scene, postProcessing, wireframe, wireframe2, wireframe3;
 
 
 init();
@@ -24,7 +23,7 @@ function init() {
     renderer.setAnimationLoop( animate );
     document.body.appendChild( renderer.domElement );
 
-    camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 1, 1000 );
+    camera = new THREE.PerspectiveCamera( 50, window.innerWidth / window.innerHeight, 1, 4000 );
     camera.position.z = 750;
 
     scene = new THREE.Scene();
@@ -33,7 +32,6 @@ function init() {
 
     object = new THREE.Object3D();
     scene.add( object );
-
 
     // objects in first box
 
@@ -72,7 +70,29 @@ function init() {
 		scene.add( text );
     })
 
-    //first box
+    // lower plane
+
+    plane = new THREE.PlaneGeometry( 1000, 2500, 40, 100);
+    planeFrame = new WireframeGeometry2( plane );
+    planeMat = new LineMaterial( {
+
+        color: 0xFFFFFF,
+        linewidth: 1, // in pixels
+        opacity: 0.4,
+        dashed: false,
+        transparent: true
+
+    } );
+
+    planeWire = new Wireframe( planeFrame, planeMat );
+    planeWire.computeLineDistances();
+    planeWire.scale.set( 1, 1, 1 );
+    planeWire.position.set(0,-255,-1000);
+    planeWire.rotation.set(1.5708,0,0);
+    scene.add( planeWire );
+
+
+    // first box
 
     geo = new THREE.BoxGeometry( 1000, 500, 500, 40,20,20 );
 
@@ -81,8 +101,8 @@ function init() {
 	matLine = new LineMaterial( {
 
 		color: 0xFF00FF,
-        linewidth: 1, // in pixels
-        opacity: 0.25,
+        linewidth: 2, // in pixels
+        opacity: 0.2,
         dashed: false,
         transparent: true
 
@@ -102,8 +122,8 @@ function init() {
 	matLine2 = new LineMaterial( {
 
 		color: 0xFFFF00,
-        linewidth: 1, // in pixels
-        opacity: 0.25,
+        linewidth: 2, // in pixels
+        opacity: 0.2,
         dashed: false,
         transparent: true
 
@@ -124,8 +144,8 @@ function init() {
 	matLine3 = new LineMaterial( {
 
 		color: 0x00FFFF,
-        linewidth: 1, // in pixels
-        opacity: 0.25,
+        linewidth: 2, // in pixels
+        opacity: 0.2,
         dashed: false,
         transparent: true
 
