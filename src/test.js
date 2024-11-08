@@ -8,7 +8,7 @@ import { Wireframe } from 'three/addons/Wireframe.js';
 import { WireframeGeometry2 } from 'three/addons/WireframeGeometry2.js';
 
 
-let camera, cameraMove, zTarget, controls, geo, geo2, geo3, object, matLine, matLine2, matLine3, plane, planeFrame, planeMat, planeWire, renderer, scene, postProcessing, wireframe, wireframe2, wireframe3;
+let camera, cameraMove, zTarget, controls, geo, object, matLine, matLine2, matLine3, plane, planeFrame, planeMat, planeWire, renderer, scene, postProcessing, wireframe, wireframe2, wireframe3;
 
 
 init();
@@ -115,9 +115,7 @@ function init() {
 
     // second box
 
-    geo2 = new THREE.BoxGeometry( 1000, 500, 500, 40,20,20 );
-
-	const geometry3 = new WireframeGeometry2( geo2 );
+	const geometry3 = new WireframeGeometry2( geo );
 
 	matLine2 = new LineMaterial( {
 
@@ -137,9 +135,7 @@ function init() {
 
     // third box
 
-    geo3 = new THREE.BoxGeometry( 1000, 500, 500, 40,20,20 );
-
-	const geometry4 = new WireframeGeometry2( geo3 );
+	const geometry4 = new WireframeGeometry2( geo );
 
 	matLine3 = new LineMaterial( {
 
@@ -239,7 +235,7 @@ function stage1() {
 
     // back wall
 
-    let stageMaterial0 = new THREE.MeshPhongMaterial( { color: 0x858585, flatShading: true } );
+    let stageMaterial0 = new THREE.MeshPhongMaterial( { color: 0xFFFFFF, flatShading: true } );
     let stageMaterial00 = new THREE.MeshPhongMaterial( { color: 0xFF0085, flatShading: true } );
 
     // left plane
@@ -251,8 +247,7 @@ function stage1() {
 
     // right plane
 
-    let backPlane2 = new THREE.PlaneGeometry( 250, 500 );
-    let backWall2 = new THREE.Mesh( backPlane2, stageMaterial0 );
+    let backWall2 = new THREE.Mesh( backPlane1, stageMaterial0 );
     backWall2.position.set( 375,0,-250 );
     scene.add(backWall2);
 
@@ -276,4 +271,39 @@ function stage1() {
     let backCurve2 = new THREE.Mesh( backArch2, stageMaterial0 );
     backCurve2.position.set( -150,50,-250 );
     scene.add( backCurve2 );
+
+
+    // side walls
+
+    // left wall
+
+    let sidePlane = new THREE.PlaneGeometry( 500, 500 );
+    let leftWall = new THREE.Mesh( sidePlane, stageMaterial0 );
+    leftWall.position.set( -500,0,0 );
+    leftWall.rotation.set(0,1.5708,0);
+    scene.add(leftWall);
+
+    // right wall
+
+    let rightWall = new THREE.Mesh( sidePlane, stageMaterial0 );
+    rightWall.position.set( 500,0,0 );
+    rightWall.rotation.set(0,-1.5708,0);
+    scene.add(rightWall);
+
+
+    // floor
+
+    let floorPlane = new THREE.PlaneGeometry( 1000, 500 );
+    let floor = new THREE.Mesh( floorPlane, stageMaterial0 );
+    floor.position.set( 0,-250,0 );
+    floor.rotation.set(-1.5708,0,0);
+    scene.add(floor);
+
+    // ceiling 
+
+    let ceiling = new THREE.Mesh( floorPlane, stageMaterial0 );
+    ceiling.position.set( 0,250,0 );
+    ceiling.rotation.set(1.5708,0,0);
+    scene.add(ceiling);
+
 }
