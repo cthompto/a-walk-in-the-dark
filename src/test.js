@@ -280,14 +280,14 @@ function stage1() {
     let sidePlane = new THREE.PlaneGeometry( 500, 500 );
     let leftWall = new THREE.Mesh( sidePlane, stageMaterial0 );
     leftWall.position.set( -500,0,0 );
-    leftWall.rotation.set(0,1.5708,0);
+    leftWall.rotation.set( 0,1.5708,0 );
     scene.add(leftWall);
 
     // right wall
 
     let rightWall = new THREE.Mesh( sidePlane, stageMaterial0 );
     rightWall.position.set( 500,0,0 );
-    rightWall.rotation.set(0,-1.5708,0);
+    rightWall.rotation.set( 0,-1.5708,0 );
     scene.add(rightWall);
 
     // floor
@@ -295,14 +295,14 @@ function stage1() {
     let floorPlane = new THREE.PlaneGeometry( 1000, 500 );
     let floor = new THREE.Mesh( floorPlane, stageMaterial0 );
     floor.position.set( 0,-250,0 );
-    floor.rotation.set(-1.5708,0,0);
+    floor.rotation.set( -1.5708,0,0 );
     scene.add(floor);
 
     // ceiling 
 
     let ceiling = new THREE.Mesh( floorPlane, stageMaterial0 );
     ceiling.position.set( 0,250,0 );
-    ceiling.rotation.set(1.5708,0,0);
+    ceiling.rotation.set( 1.5708,0,0 );
     scene.add(ceiling);
 
     
