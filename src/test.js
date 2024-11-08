@@ -157,6 +157,10 @@ function init() {
     wireframe3.position.set(0,0,-2000);
     scene.add( wireframe3 );
 
+    // stage 1 objects
+
+    stage1();
+
     // lighting
 
     scene.add( new THREE.AmbientLight( 0xcccccc ) );
@@ -229,4 +233,47 @@ function animate() {
     } else {
         cameraMove = false;
     }
+}
+
+function stage1() {
+
+    // back wall
+
+    let stageMaterial0 = new THREE.MeshPhongMaterial( { color: 0x858585, flatShading: true } );
+    let stageMaterial00 = new THREE.MeshPhongMaterial( { color: 0xFF0085, flatShading: true } );
+
+    // left plane
+
+    let backPlane1 = new THREE.PlaneGeometry( 250, 500 );
+    let backWall1 = new THREE.Mesh( backPlane1, stageMaterial0 );
+    backWall1.position.set( -375,0,-250 );
+    scene.add(backWall1);
+
+    // right plane
+
+    let backPlane2 = new THREE.PlaneGeometry( 250, 500 );
+    let backWall2 = new THREE.Mesh( backPlane2, stageMaterial0 );
+    backWall2.position.set( 375,0,-250 );
+    scene.add(backWall2);
+
+    // top plane
+
+    let backPlane3 = new THREE.PlaneGeometry( 500, 100 );
+    let backWall3 = new THREE.Mesh( backPlane3, stageMaterial0 );
+    backWall3.position.set( 0,200,-250 );
+    scene.add(backWall3);
+
+    // right arch
+
+    let backArch1 = new THREE.RingGeometry( 100, 200, 32, 2, 0, 1.5708 );
+    let backCurve1 = new THREE.Mesh( backArch1, stageMaterial0 );
+    backCurve1.position.set( 150,50,-250 );
+    scene.add( backCurve1 );
+
+    // left arch
+
+    let backArch2 = new THREE.RingGeometry( 100, 200, 32, 2, 1.5708, 1.5708 );
+    let backCurve2 = new THREE.Mesh( backArch2, stageMaterial0 );
+    backCurve2.position.set( -150,50,-250 );
+    scene.add( backCurve2 );
 }
