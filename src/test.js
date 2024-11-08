@@ -7,15 +7,22 @@ import { LineMaterial } from 'three/addons/LineMaterial.js';
 import { Wireframe } from 'three/addons/Wireframe.js';
 import { WireframeGeometry2 } from 'three/addons/WireframeGeometry2.js';
 
+// global variables
 
 let camera, cameraMove, zTarget, controls, geo, object, matLine, matLine2, matLine3, plane, planeFrame, planeMat, planeWire, renderer, scene, postProcessing, wireframe, wireframe2, wireframe3;
 
+// global shapes
+
+// global materials
+
+let stageMaterial0 = new THREE.MeshPhongMaterial( { color: 0xFFFFFF, flatShading: true, side: THREE.DoubleSide } );
+let stageMaterial00 = new THREE.MeshPhongMaterial( { color: 0xFF0085, flatShading: true, side: THREE.DoubleSide } );
 
 init();
 
 function init() {
 
-    // step scene
+    // setup scene
 
     renderer = new THREE.WebGLRenderer( { antialias: true } );
     renderer.setPixelRatio( window.devicePixelRatio );
@@ -35,16 +42,18 @@ function init() {
 
     // objects in first box
 
-    const geometry = new THREE.SphereGeometry( 1, 4, 4 );
+    const geometry = new THREE.SphereGeometry( 1.5, 16, 16 );
     const material = new THREE.MeshPhongMaterial( { color: 0x000000, flatShading: true } );
 
-    for ( let i = 0; i < 100; i ++ ) {
+    for ( let i = 0; i < 10; i ++ ) {
 
         const mesh = new THREE.Mesh( geometry, material );
+
         mesh.position.set( Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5 ).normalize();
-        mesh.position.multiplyScalar( Math.random() * 200 );
+        //mesh.translateZ(-1000);
+        mesh.position.multiplyScalar( Math.random() * 100 );
         mesh.rotation.set( Math.random() * 2, Math.random() * 2, Math.random() * 2 );
-        mesh.scale.x = mesh.scale.y = mesh.scale.z = Math.random() * 50;
+        mesh.scale.x = mesh.scale.y = mesh.scale.z = Math.random() * 30 + 30;
         object.add( mesh );
 
     }
@@ -157,6 +166,10 @@ function init() {
 
     stage1();
 
+    // stage 2 objects
+
+    stage2();
+
     // lighting
 
     scene.add( new THREE.AmbientLight( 0xcccccc ) );
@@ -235,9 +248,6 @@ function stage1() {
 
     // back wall
 
-    let stageMaterial0 = new THREE.MeshPhongMaterial( { color: 0xFFFFFF, flatShading: true } );
-    let stageMaterial00 = new THREE.MeshPhongMaterial( { color: 0xFF0085, flatShading: true } );
-
     // left plane
 
     let backPlane1 = new THREE.PlaneGeometry( 250, 500 );
@@ -307,9 +317,81 @@ function stage1() {
 
     
     // stage objects
+
+    // floor dome
+
     let halfSphere = new THREE.SphereGeometry( 250, 32, 32, 0, Math.PI*2, 0, ((Math.PI)*0.25) );
     let floorOrb = new THREE.Mesh( halfSphere, stageMaterial0 );
     floorOrb.position.set ( 0,-450,0 );
     scene.add( floorOrb );
 
+    // left pillar
+
+    let pillar = new THREE.BoxGeometry( 100, 500, 100 );
+    let leftPillar = new THREE.Mesh( pillar, stageMaterial0 );
+    leftPillar.position.set ( -450,0,0 );
+    scene.add ( leftPillar );
+
+    // right pillar
+
+    let rightPillar = new THREE.Mesh( pillar, stageMaterial0 );
+    rightPillar.position.set ( 450,0,0 );
+    scene.add ( rightPillar );
+
 }
+
+function stage2() {
+
+    // archway interior
+
+    let archWay = new THREE.CylinderGeometry( 400,400,500,50,10,true,0,3.14159 );
+    let archMesh = new THREE.Mesh( archWay, stageMaterial0 );
+    archMesh.position.set( 0,-250,-1000 );
+    archMesh.rotation.set( -1.5708,-1.5708,0 );
+    scene.add( archMesh );
+
+    // archway face
+
+    let s2frontVert = new THREE.PlaneGeometry( 100, 500 );
+    let s2frontWall1 = new THREE.Mesh( s2frontVert, stageMaterial0 );
+    s2frontWall1.position.set( -450,0,-750 );
+    scene.add( s2frontWall1 );
+
+    let s2frontWall2 = new THREE.Mesh( s2frontVert, stageMaterial0 );
+    s2frontWall2.position.set( 450,0,-750 );
+    scene.add( s2frontWall2 );
+
+    let s2frontHorz = new THREE.PlaneGeometry( 1000, 100 );
+    let s2frontWall3 = new THREE.Mesh( s2frontHorz, stageMaterial0 );
+    s2frontWall3.position.set( 0,200,-750 );
+    scene.add( s2frontWall3 );
+
+    let frontArch = new THREE.RingGeometry(400,500,50,10,0,3.14159 );
+    let archFace = new THREE.Mesh( frontArch, stageMaterial0 );
+    archFace.position.set( 0,-250,-750 );
+    scene.add( archFace );
+
+    let archFill = new THREE.PlaneGeometry( 120, 120 );
+    let leftFill = new THREE.Mesh( archFill, stageMaterial0 );
+    leftFill.position.set( -350,100,-750 );
+    scene.add( leftFill );
+
+    let rightFill = new THREE.Mesh( archFill, stageMaterial0 );
+    rightFill.position.set( 350,100,-750 );
+    scene.add( rightFill );
+
+    // ground
+
+    let floorPlane = new THREE.PlaneGeometry( 1000, 500 );
+    let floor = new THREE.Mesh( floorPlane, stageMaterial0 );
+    floor.position.set( 0,-250,-1000 );
+    floor.rotation.set( -1.5708,0,0 );
+    scene.add(floor);
+
+}
+
+// degrees to radians
+// 90 = 1.5708
+// 180 = 3.14159
+
+//equation = Deg × π/180 = Rad
