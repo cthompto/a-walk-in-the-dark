@@ -273,7 +273,7 @@ function stage1() {
     scene.add( backCurve2 );
 
 
-    // side walls
+    // other walls
 
     // left wall
 
@@ -290,7 +290,6 @@ function stage1() {
     rightWall.rotation.set(0,-1.5708,0);
     scene.add(rightWall);
 
-
     // floor
 
     let floorPlane = new THREE.PlaneGeometry( 1000, 500 );
@@ -305,5 +304,12 @@ function stage1() {
     ceiling.position.set( 0,250,0 );
     ceiling.rotation.set(1.5708,0,0);
     scene.add(ceiling);
+
+    
+    // stage objects
+    let halfSphere = new THREE.SphereGeometry( 250, 32, 32, 0, Math.PI*2, 0, ((Math.PI)*0.25) );
+    let floorOrb = new THREE.Mesh( halfSphere, stageMaterial0 );
+    floorOrb.position.set ( 0,-450,0 );
+    scene.add( floorOrb );
 
 }
