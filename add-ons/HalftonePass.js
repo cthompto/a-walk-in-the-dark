@@ -3,7 +3,7 @@ import {
 	UniformsUtils
 } from 'three';
 import { Pass, FullScreenQuad } from './Pass.js';
-import { HalftoneShader } from '../shaders/HalftoneShader.js';
+import { HalftoneShader } from './HalftoneShader.js';
 
 /**
  * RGB Halftone pass for three.js effects composer. Requires HalftoneShader.

@@ -6,10 +6,13 @@ import { OrbitControls } from 'three/addons/OrbitControls.js';
 import { LineMaterial } from 'three/addons/LineMaterial.js';
 import { Wireframe } from 'three/addons/Wireframe.js';
 import { WireframeGeometry2 } from 'three/addons/WireframeGeometry2.js';
+import { EffectComposer } from 'three/addons/EffectComposer.js';
+import { RenderPass } from 'three/addons/RenderPass.js';
+import { HalftonePass } from 'three/addons/HalftonePass.js';
 
 // global variables
 
-let camera, cameraMove, zTarget, controls, geo, object, matLine, matLine2, matLine3, originObject, originObject2, plane, planeFrame, planeMat, planeWire, renderer, scene, postProcessing, wireframe, wireframe2, wireframe3;
+let camera, cameraMove, composer, controls, geo, object, matLine, matLine2, matLine3, originObject, originObject2, plane, planeFrame, planeMat, planeWire, renderer, scene, postProcessing, wireframe, wireframe2, wireframe3, zTarget;
 
 // global shapes
 
@@ -20,6 +23,10 @@ const basicSphere = new THREE.SphereGeometry( 1.5, 16, 16 );
 const material = new THREE.MeshPhongMaterial( { color: 0x000000, flatShading: true } );
 const stageMaterial0 = new THREE.MeshPhongMaterial( { color: 0xFFFFFF, flatShading: true, side: THREE.DoubleSide } );
 const stageMaterial00 = new THREE.MeshPhongMaterial( { color: 0xFF0085, flatShading: true, side: THREE.DoubleSide } );
+
+// global settings
+
+let filterToggle = true;
 
 init();
 
@@ -54,13 +61,13 @@ function init() {
 
     // stage 1 and objects
 
-    stage1(-1000);
-    props1(-1000);
+    stage1(0);
+    props1(0);
 
     // stage 2 and objects
 
-    stage2(0);
-    props2(0);
+    stage2(-1000);
+    props2(-1000);
 
     // orbit controls for debugging
 
@@ -79,13 +86,17 @@ function init() {
 
     // main controls (forward and backward)
 
-    document.addEventListener( 'keyup' , cameraMovement);
+    document.addEventListener( 'keyup' , keyboardControls);
+
+    // halftone effect
+    
+    halftoneEffect();
 
 }
 
 // function for moving the camera a set distance on key press
 
-function cameraMovement(e) {
+function keyboardControls(e) {
     console.log('key logged')
     if (!cameraMove) {
         if (e.key == 'w') {
@@ -98,6 +109,13 @@ function cameraMovement(e) {
             //camera.position.z = camera.position.z+1000;
             console.log('s');
             console.log(zTarget);
+        }
+    }
+    if (e.key == 'q') {
+        if (filterToggle) {
+            filterToggle = false;
+        } else if (!filterToggle) {
+            filterToggle = true;
         }
     }
 }
@@ -114,11 +132,16 @@ function onWindowResize() {
 // animation and render loop
 
 function animate() {
+    
+    // animations
+    
     object.rotation.x += 0.005;
     object.rotation.y += 0.005;
     originObject.rotation.y += 0.005;
     originObject2.rotation.y -= 0.004;
-    renderer.render( scene, camera );
+
+    // camera movement
+
     if (camera.position.z < zTarget) {
         camera.position.z = camera.position.z + 5;
         cameraMove = true;
@@ -128,6 +151,34 @@ function animate() {
     } else {
         cameraMove = false;
     }
+
+    // render
+    if (filterToggle) {
+        composer.render( scene, camera );
+    } else if (!filterToggle) {
+        renderer.render( scene, camera );
+    }
+    
+}
+
+function halftoneEffect() {
+    composer = new EffectComposer( renderer );
+				const renderPass = new RenderPass( scene, camera );
+				const params = {
+					shape: 1,
+					radius: 10,
+					rotateR: Math.PI / 12,
+					rotateB: Math.PI / 12 * 2,
+					rotateG: Math.PI / 12 * 3,
+					scatter: 0,
+					blending: 1,
+					blendingMode: 1,
+					greyscale: true,
+					disable: false
+				};
+				const halftonePass = new HalftonePass( window.innerWidth, window.innerHeight, params );
+				composer.addPass( renderPass );
+				composer.addPass( halftonePass );
 }
 
 function sceneStructure() {
