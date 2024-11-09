@@ -9,14 +9,17 @@ import { WireframeGeometry2 } from 'three/addons/WireframeGeometry2.js';
 
 // global variables
 
-let camera, cameraMove, zTarget, controls, geo, object, matLine, matLine2, matLine3, plane, planeFrame, planeMat, planeWire, renderer, scene, postProcessing, wireframe, wireframe2, wireframe3;
+let camera, cameraMove, zTarget, controls, geo, object, matLine, matLine2, matLine3, originObject, originObject2, plane, planeFrame, planeMat, planeWire, renderer, scene, postProcessing, wireframe, wireframe2, wireframe3;
 
 // global shapes
 
+const basicSphere = new THREE.SphereGeometry( 1.5, 16, 16 );
+
 // global materials
 
-let stageMaterial0 = new THREE.MeshPhongMaterial( { color: 0xFFFFFF, flatShading: true, side: THREE.DoubleSide } );
-let stageMaterial00 = new THREE.MeshPhongMaterial( { color: 0xFF0085, flatShading: true, side: THREE.DoubleSide } );
+const material = new THREE.MeshPhongMaterial( { color: 0x000000, flatShading: true } );
+const stageMaterial0 = new THREE.MeshPhongMaterial( { color: 0xFFFFFF, flatShading: true, side: THREE.DoubleSide } );
+const stageMaterial00 = new THREE.MeshPhongMaterial( { color: 0xFF0085, flatShading: true, side: THREE.DoubleSide } );
 
 init();
 
@@ -51,12 +54,13 @@ function init() {
 
     // stage 1 and objects
 
-    stage1(0);
-    props1(0);
+    stage1(-1000);
+    props1(-1000);
 
     // stage 2 and objects
 
-    stage2(-1000);
+    stage2(0);
+    props2(0);
 
     // orbit controls for debugging
 
@@ -112,6 +116,8 @@ function onWindowResize() {
 function animate() {
     object.rotation.x += 0.005;
     object.rotation.y += 0.005;
+    originObject.rotation.y += 0.005;
+    originObject2.rotation.y -= 0.004;
     renderer.render( scene, camera );
     if (camera.position.z < zTarget) {
         camera.position.z = camera.position.z + 5;
@@ -280,8 +286,7 @@ function stage1(depthOffset) {
     ceiling.rotation.set( 1.5708,0,0 );
     scene.add(ceiling);
 
-    
-    // stage objects
+    // stage details
 
     // floor dome
 
@@ -313,12 +318,9 @@ function props1(depthOffset) {
     scene.add( object );
     object.position.set(0,0,0+depthOffset);
 
-    const geometry = new THREE.SphereGeometry( 1.5, 16, 16 );
-    const material = new THREE.MeshPhongMaterial( { color: 0x000000, flatShading: true } );
-
     for ( let i = 0; i < 10; i ++ ) {
 
-        const mesh = new THREE.Mesh( geometry, material );
+        const mesh = new THREE.Mesh( basicSphere, material );
 
         mesh.position.set( Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5 ).normalize();
         //mesh.translateZ(-1000);
@@ -398,6 +400,44 @@ function stage2(depthOffset) {
     floor.position.set( 0,-250,depthOffset );
     floor.rotation.set( -1.5708,0,0 );
     scene.add(floor);
+
+}
+
+function props2(depthOffset) {
+    // origin for all objects
+    originObject = new THREE.Object3D();
+    scene.add( originObject );
+    originObject.position.set(0,-249,0+depthOffset);
+
+    let circleGeometry = new THREE.CircleGeometry( 1, 32 );
+
+    for ( let i = 0; i < 15; i ++ ) {
+
+        const mesh = new THREE.Mesh( circleGeometry, material );
+
+        mesh.position.set( Math.random() - 0.5, 0, Math.random() - 0.5 ).normalize();
+        mesh.position.multiplyScalar( Math.random() * 125 );
+        mesh.rotation.set( -1.5708, 0, Math.random() * 2 );
+        mesh.scale.x = mesh.scale.y = mesh.scale.z = Math.random() * 25 + 75;
+        originObject.add( mesh );
+
+    }
+
+    originObject2 = new THREE.Object3D();
+    scene.add( originObject2 );
+    originObject2.position.set(0,-249,0+depthOffset);
+
+    for ( let i = 0; i < 15; i ++ ) {
+
+        const mesh = new THREE.Mesh( circleGeometry, material );
+
+        mesh.position.set( Math.random() - 0.5, 0, Math.random() - 0.5 ).normalize();
+        mesh.position.multiplyScalar( Math.random() * 125 );
+        mesh.rotation.set( -1.5708, 0, Math.random() * 2 );
+        mesh.scale.x = mesh.scale.y = mesh.scale.z = Math.random() * 25 + 75;
+        originObject2.add( mesh );
+
+    }
 
 }
 
