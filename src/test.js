@@ -47,7 +47,7 @@ function init() {
     camera.position.z = 750;
 
     scene = new THREE.Scene();
-    scene.fog = new THREE.Fog( 0x000000, 250, 2000 );
+    scene.fog = new THREE.Fog( 0x000000, 150, 1500 );
     scene.background =  new THREE.Color( 0x151515 );
 
      // lighting
