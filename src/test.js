@@ -12,7 +12,7 @@ import { HalftonePass } from 'three/addons/HalftonePass.js';
 
 // global variables
 
-let camera, cameraMove, composer, controls, geo, object, matLine, matLine2, matLine3, originObject, originObject2, plane, planeFrame, planeMat, planeWire, renderer, scene, postProcessing, wireframe, wireframe2, wireframe3, zTarget;
+let camera, cameraMove, composer, controls, geo, halftoneParams, halftonePass, object, matLine, matLine2, matLine3, originObject, originObject2, plane, planeFrame, planeMat, planeWire, renderer, renderPass, scene, postProcessing, wireframe, wireframe2, wireframe3, zTarget;
 
 // global shapes
 
@@ -27,6 +27,9 @@ const stageMaterial00 = new THREE.MeshPhongMaterial( { color: 0xFF0085, flatShad
 // global settings
 
 let filterToggle = true;
+let greyToggle = true;
+
+// scene start
 
 init();
 
@@ -94,41 +97,6 @@ function init() {
 
 }
 
-// function for moving the camera a set distance on key press
-
-function keyboardControls(e) {
-    console.log('key logged')
-    if (!cameraMove) {
-        if (e.key == 'w') {
-            zTarget = camera.position.z-1000;
-            //camera.position.z = camera.position.z-1000;
-            console.log('w');
-            console.log(zTarget);
-        } else if (e.key == 's') {
-            zTarget = camera.position.z+1000;
-            //camera.position.z = camera.position.z+1000;
-            console.log('s');
-            console.log(zTarget);
-        }
-    }
-    if (e.key == 'q') {
-        if (filterToggle) {
-            filterToggle = false;
-        } else if (!filterToggle) {
-            filterToggle = true;
-        }
-    }
-}
-
-// function for resizing scene when the window resizes
-
-function onWindowResize() {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-
-    renderer.setSize( window.innerWidth, window.innerHeight );
-}
-
 // animation and render loop
 
 function animate() {
@@ -161,10 +129,59 @@ function animate() {
     
 }
 
+// user interaction and effects functions
+
+// function for moving the camera a set distance on key press
+
+function keyboardControls(e) {
+    console.log('key logged')
+    if (!cameraMove) {
+        if (e.key == 'w') {
+            zTarget = camera.position.z-1000;
+            //camera.position.z = camera.position.z-1000;
+            console.log('w');
+            console.log(zTarget);
+        } else if (e.key == 's') {
+            zTarget = camera.position.z+1000;
+            //camera.position.z = camera.position.z+1000;
+            console.log('s');
+            console.log(zTarget);
+        }
+    }
+    if (e.key == 'q') {
+        if (filterToggle) {
+            filterToggle = false;
+        } else if (!filterToggle) {
+            filterToggle = true;
+        }
+    } else if (e.key == 'g') {
+        if (halftoneParams.greyscale) {
+            halftoneParams.greyscale = false;
+        } else if (!halftoneParams.greyscale) {
+            halftoneParams.greyscale = true;
+        }
+        console.log(halftoneParams.greyscale);
+        halftonePass = new HalftonePass( window.innerWidth, window.innerHeight, halftoneParams );
+        composer.addPass( renderPass );
+        composer.addPass( halftonePass );
+    }
+}
+
+// function for resizing scene when the window resizes
+
+function onWindowResize() {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+
+    renderer.setSize( window.innerWidth, window.innerHeight );
+}
+
+// halftone effect
+
 function halftoneEffect() {
     composer = new EffectComposer( renderer );
-				const renderPass = new RenderPass( scene, camera );
-				const params = {
+				renderPass = new RenderPass( scene, camera );
+				halftoneParams = {
 					shape: 1,
 					radius: 10,
 					rotateR: Math.PI / 12,
@@ -176,10 +193,12 @@ function halftoneEffect() {
 					greyscale: true,
 					disable: false
 				};
-				const halftonePass = new HalftonePass( window.innerWidth, window.innerHeight, params );
-				composer.addPass( renderPass );
-				composer.addPass( halftonePass );
+	halftonePass = new HalftonePass( window.innerWidth, window.innerHeight, halftoneParams );
+	composer.addPass( renderPass );
+	composer.addPass( halftonePass );
 }
+
+// functions for objects and architecture
 
 function sceneStructure() {
     // lower plane
@@ -490,6 +509,14 @@ function props2(depthOffset) {
 
     }
 
+}
+
+function stage3() {
+
+}
+
+function props3() {
+    
 }
 
 // degrees to radians
