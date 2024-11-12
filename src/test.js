@@ -70,7 +70,7 @@ function init() {
 
     // scene wireframe structure
 
-    //sceneStructure();
+    sceneStructure();
 
     // stage 1 and objects
 
