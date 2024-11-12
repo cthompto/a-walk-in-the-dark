@@ -21,7 +21,8 @@ const basicSphere = new THREE.SphereGeometry( 1.5, 16, 16 );
 
 // global materials
 
-const greenery1 = new THREE.MeshPhongMaterial( { color: 0x2d7d2c, flatShading: true, side: THREE.DoubleSide } )
+const greenery1 = new THREE.MeshPhongMaterial( { color: 0x2d7d2c, flatShading: true, side: THREE.DoubleSide } );
+const dirt = new THREE.MeshPhongMaterial( { color: 0x693716, flatShading: true, side: THREE.DoubleSide } );
 const material = new THREE.MeshPhongMaterial( { color: 0x000000, flatShading: true } );
 const stageMaterial0 = new THREE.MeshPhongMaterial( { color: 0xFFFFFF, flatShading: true, side: THREE.DoubleSide } );
 const stageMaterial00 = new THREE.MeshPhongMaterial( { color: 0xFF0085, flatShading: true, side: THREE.DoubleSide } );
@@ -64,7 +65,7 @@ function init() {
 
      scene.add( new THREE.AmbientLight( 0xcccccc ) );
 
-     const light = new THREE.DirectionalLight( 0xffffff, 3 );
+     const light = new THREE.DirectionalLight( 0xffffff, 6 );
      light.position.set( 1, 1, 1 );
      scene.add( light );
 
@@ -534,33 +535,33 @@ function props2(depthOffset) {
 
 function stage3(depthOffset) {
 
-    // foundation
+    // ground
 
-    let ground = new THREE.BoxGeometry( 1000, 30, 500 );
-    let groundMain = new THREE.Mesh( ground, stageMaterial0 );
+    let ground = new THREE.BoxGeometry( 980, 30, 480 );
+    let groundMain = new THREE.Mesh( ground, dirt );
     groundMain.position.set ( 0,-235,0+depthOffset );
     scene.add ( groundMain );
 
     // outer lip
 
-    let longEdge = new THREE.BoxGeometry( 1000, 10, 10 );
+    let longEdge = new THREE.BoxGeometry( 1000, 40, 10 );
 
     let edgeFront = new THREE.Mesh( longEdge, stageMaterial0 );
-    edgeFront.position.set(0, -215, -245+depthOffset );
+    edgeFront.position.set(0, -230, -245+depthOffset );
     scene.add( edgeFront );
 
     let edgeBack = new THREE.Mesh( longEdge, stageMaterial0 );
-    edgeBack.position.set(0, -215, 245+depthOffset );
+    edgeBack.position.set(0, -230, 245+depthOffset );
     scene.add( edgeBack );
 
-    let shortEdge = new THREE.BoxGeometry( 10, 10, 480 );
+    let shortEdge = new THREE.BoxGeometry( 10, 40, 480 );
 
     let leftEdge = new THREE.Mesh( shortEdge, stageMaterial0 );
-    leftEdge.position.set( -495, -215, 0+depthOffset );
+    leftEdge.position.set( -495, -230, 0+depthOffset );
     scene.add( leftEdge );
 
     let rightEdge = new THREE.Mesh( shortEdge, stageMaterial0 );
-    rightEdge.position.set( 495, -215, 0+depthOffset );
+    rightEdge.position.set( 495, -230, 0+depthOffset );
     scene.add( rightEdge );
 
     
@@ -573,35 +574,23 @@ function props3(depthOffset) {
 
     let grass = new THREE.CylinderGeometry( 1,1,1,3 ); 
 
-    // right side
-
-    for ( let i = 0; i < 2000; i ++ ) {
+    for ( let i = 0; i < 4000; i ++ ) {
 
         const mesh = new THREE.Mesh( grass, greenery1 );
 
-        mesh.position.set( (Math.random()*300)+175, -200, (Math.random()*475)-240+depthOffset );
-        //mesh.position.multiplyScalar( Math.random() * 125 );
+        if (i < 2000) {
+            mesh.position.set( (Math.random()*300)+175, -215, (Math.random()*470)-240+depthOffset );
+        } else {
+            mesh.position.set( (Math.random()*300)-475, -215, (Math.random()*470)-240+depthOffset );
+        }
+
         mesh.rotation.set( Math.random()-0.5, Math.random()-0.5, Math.random()-0.5 );
         mesh.scale.x = mesh.scale.z = Math.random() * 0.5 + 0.5;
-        mesh.scale.y = Math.random() * 15 + 15;
+        mesh.scale.y = Math.random() * 55 + 20;
         scene.add( mesh );
 
     }
 
-    // left side
-
-    for ( let i = 0; i < 2000; i ++ ) {
-
-        const mesh = new THREE.Mesh( grass, greenery1 );
-
-        mesh.position.set( (Math.random()*300)-475, -200, (Math.random()*475)-240+depthOffset );
-        //mesh.position.multiplyScalar( Math.random() * 125 );
-        mesh.rotation.set( Math.random()-0.5, Math.random()-0.5, Math.random()-0.5 );
-        mesh.scale.x = mesh.scale.z = Math.random() * 0.5 + 0.5;
-        mesh.scale.y = Math.random() * 15 + 30;
-        scene.add( mesh );
-
-    }
 }
 
 // degrees to radians
