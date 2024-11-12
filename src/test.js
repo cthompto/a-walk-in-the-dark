@@ -83,8 +83,13 @@ function init() {
     props2(-1000);
 
     // stage 3 and objects
+
     stage3(-2000);
     props3(-2000);
+
+    // stage 4 and objects
+
+    stage1(-3000);
 
     // orbit controls for debugging
 
@@ -376,7 +381,7 @@ function stage1(depthOffset) {
 
     // floor dome
 
-    let halfSphere = new THREE.SphereGeometry( 250, 32, 32, 0, Math.PI*2, 0, ((Math.PI)*0.25) );
+    let halfSphere = new THREE.SphereGeometry( 250, 32, 32, 0, Math.PI*2, 0, ((Math.PI)*0.2) );
     let floorOrb = new THREE.Mesh( halfSphere, stageMaterial0 );
     floorOrb.position.set ( 0,-450,0+depthOffset );
     scene.add( floorOrb );
