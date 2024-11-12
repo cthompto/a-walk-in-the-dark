@@ -20,13 +20,14 @@ const basicSphere = new THREE.SphereGeometry( 1.5, 16, 16 );
 
 // global materials
 
+const greenery1 = new THREE.MeshPhongMaterial( { color: 0x2d7d2c, flatShading: true, side: THREE.DoubleSide } )
 const material = new THREE.MeshPhongMaterial( { color: 0x000000, flatShading: true } );
 const stageMaterial0 = new THREE.MeshPhongMaterial( { color: 0xFFFFFF, flatShading: true, side: THREE.DoubleSide } );
 const stageMaterial00 = new THREE.MeshPhongMaterial( { color: 0xFF0085, flatShading: true, side: THREE.DoubleSide } );
 
 // global settings
 
-let filterToggle = true;
+let filterToggle = false;
 let greyToggle = true;
 
 // scene start
@@ -71,6 +72,10 @@ function init() {
 
     stage2(-1000);
     props2(-1000);
+
+    // stage 3 and objects
+    stage3(-2000);
+    props3(-2000);
 
     // orbit controls for debugging
 
@@ -511,12 +516,76 @@ function props2(depthOffset) {
 
 }
 
-function stage3() {
+function stage3(depthOffset) {
+
+    // foundation
+
+    let ground = new THREE.BoxGeometry( 1000, 30, 500 );
+    let groundMain = new THREE.Mesh( ground, stageMaterial0 );
+    groundMain.position.set ( 0,-235,0+depthOffset );
+    scene.add ( groundMain );
+
+    // outer lip
+
+    let longEdge = new THREE.BoxGeometry( 1000, 10, 10 );
+
+    let edgeFront = new THREE.Mesh( longEdge, stageMaterial0 );
+    edgeFront.position.set(0, -215, -245+depthOffset );
+    scene.add( edgeFront );
+
+    let edgeBack = new THREE.Mesh( longEdge, stageMaterial0 );
+    edgeBack.position.set(0, -215, 245+depthOffset );
+    scene.add( edgeBack );
+
+    let shortEdge = new THREE.BoxGeometry( 10, 10, 480 );
+
+    let leftEdge = new THREE.Mesh( shortEdge, stageMaterial0 );
+    leftEdge.position.set( -495, -215, 0+depthOffset );
+    scene.add( leftEdge );
+
+    let rightEdge = new THREE.Mesh( shortEdge, stageMaterial0 );
+    rightEdge.position.set( 495, -215, 0+depthOffset );
+    scene.add( rightEdge );
+
+    
 
 }
 
-function props3() {
-    
+function props3(depthOffset) {
+
+    // grass
+
+    let grass = new THREE.CylinderGeometry( 1,1,1,3 ); 
+
+    // right side
+
+    for ( let i = 0; i < 2000; i ++ ) {
+
+        const mesh = new THREE.Mesh( grass, greenery1 );
+
+        mesh.position.set( (Math.random()*300)+175, -200, (Math.random()*475)-240+depthOffset );
+        //mesh.position.multiplyScalar( Math.random() * 125 );
+        mesh.rotation.set( Math.random()-0.5, Math.random()-0.5, Math.random()-0.5 );
+        mesh.scale.x = mesh.scale.z = Math.random() * 0.5 + 0.5;
+        mesh.scale.y = Math.random() * 15 + 15;
+        scene.add( mesh );
+
+    }
+
+    // left side
+
+    for ( let i = 0; i < 2000; i ++ ) {
+
+        const mesh = new THREE.Mesh( grass, greenery1 );
+
+        mesh.position.set( (Math.random()*300)-475, -200, (Math.random()*475)-240+depthOffset );
+        //mesh.position.multiplyScalar( Math.random() * 125 );
+        mesh.rotation.set( Math.random()-0.5, Math.random()-0.5, Math.random()-0.5 );
+        mesh.scale.x = mesh.scale.z = Math.random() * 0.5 + 0.5;
+        mesh.scale.y = Math.random() * 15 + 30;
+        scene.add( mesh );
+
+    }
 }
 
 // degrees to radians
