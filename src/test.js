@@ -9,6 +9,7 @@ import { WireframeGeometry2 } from 'three/addons/WireframeGeometry2.js';
 import { EffectComposer } from 'three/addons/EffectComposer.js';
 import { RenderPass } from 'three/addons/RenderPass.js';
 import { HalftonePass } from 'three/addons/HalftonePass.js';
+import Stats from 'three/addons/Stats.js';
 
 // global variables
 
@@ -30,6 +31,13 @@ const stageMaterial00 = new THREE.MeshPhongMaterial( { color: 0xFF0085, flatShad
 let filterToggle = false;
 let greyToggle = true;
 let lastTime;
+
+// stats
+
+var stats = new Stats();
+stats.showPanel( 0 ); // 0: fps, 1: ms, 2: mb, 3+: custom
+document.body.appendChild( stats.dom );
+
 
 // scene start
 
@@ -106,6 +114,8 @@ function init() {
 // animation and render loop
 
 function animate() {
+
+    stats.begin();
     
     // animations
     
@@ -132,6 +142,8 @@ function animate() {
     } else if (!filterToggle) {
         renderer.render( scene, camera );
     }
+
+    stats.end();
     
 }
 
