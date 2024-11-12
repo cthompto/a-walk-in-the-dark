@@ -29,6 +29,7 @@ const stageMaterial00 = new THREE.MeshPhongMaterial( { color: 0xFF0085, flatShad
 
 let filterToggle = false;
 let greyToggle = true;
+let lastTime;
 
 // scene start
 
@@ -61,7 +62,7 @@ function init() {
 
     // scene wireframe structure
 
-    sceneStructure();
+    //sceneStructure();
 
     // stage 1 and objects
 
@@ -169,6 +170,8 @@ function keyboardControls(e) {
         halftonePass = new HalftonePass( window.innerWidth, window.innerHeight, halftoneParams );
         composer.addPass( renderPass );
         composer.addPass( halftonePass );
+    } else if (e.key == 'l') {
+        console.log(renderer.log);
     }
 }
 
