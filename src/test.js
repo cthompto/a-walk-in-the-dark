@@ -173,15 +173,11 @@ function keyboardControls(e) {
             filterToggle = true;
         }
     } else if (e.key == 'g') {
-        if (halftoneParams.greyscale) {
-            halftoneParams.greyscale = false;
-        } else if (!halftoneParams.greyscale) {
-            halftoneParams.greyscale = true;
+        if (halftonePass.uniforms[ 'greyscale' ].value) {
+            halftonePass.uniforms[ 'greyscale' ].value = false;
+        } else if (!halftonePass.uniforms[ 'greyscale' ].value) {
+            halftonePass.uniforms[ 'greyscale' ].value = true;
         }
-        console.log(halftoneParams.greyscale);
-        halftonePass = new HalftonePass( window.innerWidth, window.innerHeight, halftoneParams );
-        composer.addPass( renderPass );
-        composer.addPass( halftonePass );
     } else if (e.key == 'l') {
         console.log(renderer.log);
     }
