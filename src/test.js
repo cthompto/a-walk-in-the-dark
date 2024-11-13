@@ -13,11 +13,13 @@ import Stats from 'three/addons/Stats.js';
 
 // global variables
 
-let camera, cameraMove, composer, controls, geo, halftoneParams, halftonePass, object, matLine, matLine2, matLine3, originObject, originObject2, plane, planeFrame, planeMat, planeWire, renderer, renderPass, scene, postProcessing, wireframe, wireframe2, wireframe3, zTarget;
+let camera, cameraMove, composer, controls, halftoneParams, halftonePass, object, matLine, matLine2, matLine3, originObject, originObject2, plane, planeFrame, planeMat, planeWire, renderer, renderPass, scene, postProcessing, wireframe, wireframe2, wireframe3, zTarget;
 
 // global shapes
 
 const basicSphere = new THREE.SphereGeometry( 1.5, 16, 16 );
+const geo = new THREE.BoxGeometry( 1000, 500, 500, 40,20,20 ); // large scene box
+
 
 // global materials
 
@@ -74,7 +76,7 @@ function init() {
 
     // scene wireframe structure
 
-    sceneStructure();
+    //sceneStructure();
 
     // stage 1 and objects
 
@@ -83,18 +85,23 @@ function init() {
 
     // stage 2 and objects
 
-    stage2(-2000);
-    props2(-2000);
+    stage2(-1000);
+    props2(-1000);
 
     // stage 3 and objects
 
-    stage3(-3000);
-    props3(-3000);
+    stage3(-4000);
+    props3(-4000);
 
     // stage 4 and objects
 
-    stage4(-1000);
-    props4(-1000);
+    stage4(-2000);
+    props4(-2000);
+
+    // stage 5 and objects
+
+    stage5(-3000);
+    props5(-3000);
 
     // orbit controls for debugging
 
@@ -250,8 +257,6 @@ function sceneStructure() {
 
 
     // first box
-
-    geo = new THREE.BoxGeometry( 1000, 500, 500, 40,20,20 );
 
 	const geometry2 = new WireframeGeometry2( geo );
 
@@ -542,7 +547,7 @@ function stage3(depthOffset) {
     // ground
 
     let ground = new THREE.BoxGeometry( 980, 30, 480 );
-    let groundMain = new THREE.Mesh( ground, dirt );
+    let groundMain = new THREE.Mesh( ground, stageMaterial2 );
     groundMain.position.set ( 0,-235,0+depthOffset );
     scene.add ( groundMain );
 
@@ -550,21 +555,21 @@ function stage3(depthOffset) {
 
     let longEdge = new THREE.BoxGeometry( 1000, 40, 10 );
 
-    let edgeFront = new THREE.Mesh( longEdge, stageMaterial0 );
+    let edgeFront = new THREE.Mesh( longEdge, stageMaterial1 );
     edgeFront.position.set(0, -230, -245+depthOffset );
     scene.add( edgeFront );
 
-    let edgeBack = new THREE.Mesh( longEdge, stageMaterial0 );
+    let edgeBack = new THREE.Mesh( longEdge, stageMaterial1 );
     edgeBack.position.set(0, -230, 245+depthOffset );
     scene.add( edgeBack );
 
     let shortEdge = new THREE.BoxGeometry( 10, 40, 480 );
 
-    let leftEdge = new THREE.Mesh( shortEdge, stageMaterial0 );
+    let leftEdge = new THREE.Mesh( shortEdge, stageMaterial1 );
     leftEdge.position.set( -495, -230, 0+depthOffset );
     scene.add( leftEdge );
 
-    let rightEdge = new THREE.Mesh( shortEdge, stageMaterial0 );
+    let rightEdge = new THREE.Mesh( shortEdge, stageMaterial1 );
     rightEdge.position.set( 495, -230, 0+depthOffset );
     scene.add( rightEdge );
 
@@ -580,7 +585,7 @@ function props3(depthOffset) {
 
     for ( let i = 0; i < 4000; i ++ ) {
 
-        const mesh = new THREE.Mesh( grass, greenery1 );
+        const mesh = new THREE.Mesh( grass, stageMaterial0 );
 
         if (i < 2000) {
             mesh.position.set( (Math.random()*300)+175, -215, (Math.random()*470)-240+depthOffset );
@@ -651,19 +656,19 @@ function stage4(depthOffset) {
     let floorLong = new THREE.BoxGeometry( 980, 150, 10 );
     let floorShort = new THREE.BoxGeometry( 400, 200, 10 );
 
-    let floorTop = new THREE.Mesh( floorLong, stageMaterial2 );
+    let floorTop = new THREE.Mesh( floorLong, stageMaterial1 );
     floorTop.position.set( 0, 175, -245+depthOffset );
     scene.add( floorTop );
 
-    let floorBottom = new THREE.Mesh( floorLong, stageMaterial2 );
+    let floorBottom = new THREE.Mesh( floorLong, stageMaterial1 );
     floorBottom.position.set( 0, -175, -245+depthOffset );
     scene.add( floorBottom );
 
-    let floorRight = new THREE.Mesh( floorShort, stageMaterial2 );
+    let floorRight = new THREE.Mesh( floorShort, stageMaterial1 );
     floorRight.position.set( 300, 0, -245+depthOffset );
     scene.add( floorRight );
 
-    let floorLeft = new THREE.Mesh( floorShort, stageMaterial2 );
+    let floorLeft = new THREE.Mesh( floorShort, stageMaterial1 );
     floorLeft.position.set( -300, 0, -245+depthOffset );
     scene.add( floorLeft );
 
@@ -674,12 +679,12 @@ function stage4(depthOffset) {
     let wellOuter = new THREE.CylinderGeometry( 100, 100, 40, 32, 1, true );
     let wellInner = new THREE.CylinderGeometry( 90, 90, 40, 32, 1, true );
 
-    let wellOutside = new THREE.Mesh( wellOuter, stageMaterial1 );
+    let wellOutside = new THREE.Mesh( wellOuter, stageMaterial2 );
     wellOutside.position.set( 0, 0, -230+depthOffset );
     wellOutside.rotation.set( 1.5708, 0, 0 );
     scene.add( wellOutside );
 
-    let wellInside = new THREE.Mesh( wellInner, stageMaterial1 );
+    let wellInside = new THREE.Mesh( wellInner, stageMaterial2 );
     wellInside.position.set( 0, 0, -230+depthOffset );
     wellInside.rotation.set( 1.5708, 0, 0 );
     scene.add( wellInside );
@@ -687,7 +692,7 @@ function stage4(depthOffset) {
     // well top
 
     let wellRim = new THREE.RingGeometry( 90, 100, 32, 1 );
-    let wellTop = new THREE.Mesh( wellRim, stageMaterial1 );
+    let wellTop = new THREE.Mesh( wellRim, stageMaterial2 );
     wellTop.position.set( 0, 0, -210+depthOffset );
     scene.add( wellTop );
 
@@ -719,6 +724,29 @@ function stage4(depthOffset) {
 }
 
 function props4(depthOffset) {
+
+}
+
+function stage5(depthOffset) {
+    const voidBox = new WireframeGeometry2( geo );
+
+	let voidLine = new LineMaterial( {
+
+		color: 0xFFFFFF,
+        linewidth: 2, // in pixels
+        opacity: 0.2,
+        dashed: false,
+        transparent: true
+
+    } );
+
+    let voidFrame = new Wireframe( voidBox, voidLine );
+    voidFrame.computeLineDistances();
+    voidFrame.position.set(0,0,0+depthOffset);
+    scene.add( voidFrame );
+}
+
+function props5(depthOffset) {
 
 }
 
