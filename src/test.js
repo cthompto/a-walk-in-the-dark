@@ -392,7 +392,7 @@ function stage1(depthOffset) {
     // floor dome
 
     let halfSphere = new THREE.SphereGeometry( 250, 32, 32, 0, Math.PI*2, 0, ((Math.PI)*0.2) );
-    let floorOrb = new THREE.Mesh( halfSphere, stageMaterial0 );
+    let floorOrb = new THREE.Mesh( halfSphere, stageMaterial1 );
     floorOrb.position.set ( 0,-450,0+depthOffset );
     scene.add( floorOrb );
 
@@ -421,7 +421,7 @@ function props1(depthOffset) {
 
     for ( let i = 0; i < 10; i ++ ) {
 
-        const mesh = new THREE.Mesh( basicSphere, material );
+        const mesh = new THREE.Mesh( basicSphere, stageMaterial2 );
 
         mesh.position.set( Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5 ).normalize();
         //mesh.translateZ(-1000);
@@ -467,37 +467,37 @@ function stage2(depthOffset) {
     // archway face
 
     let s2frontVert = new THREE.PlaneGeometry( 100, 500 );
-    let s2frontWall1 = new THREE.Mesh( s2frontVert, stageMaterial0 );
+    let s2frontWall1 = new THREE.Mesh( s2frontVert, stageMaterial1 );
     s2frontWall1.position.set( -450,0,250+depthOffset );
     scene.add( s2frontWall1 );
 
-    let s2frontWall2 = new THREE.Mesh( s2frontVert, stageMaterial0 );
+    let s2frontWall2 = new THREE.Mesh( s2frontVert, stageMaterial1 );
     s2frontWall2.position.set( 450,0,250+depthOffset );
     scene.add( s2frontWall2 );
 
     let s2frontHorz = new THREE.PlaneGeometry( 1000, 100 );
-    let s2frontWall3 = new THREE.Mesh( s2frontHorz, stageMaterial0 );
+    let s2frontWall3 = new THREE.Mesh( s2frontHorz, stageMaterial1 );
     s2frontWall3.position.set( 0,200,250+depthOffset );
     scene.add( s2frontWall3 );
 
     let frontArch = new THREE.RingGeometry(400,500,50,10,0,3.14159 );
-    let archFace = new THREE.Mesh( frontArch, stageMaterial0 );
+    let archFace = new THREE.Mesh( frontArch, stageMaterial1 );
     archFace.position.set( 0,-250,250+depthOffset );
     scene.add( archFace );
 
     let archFill = new THREE.PlaneGeometry( 120, 120 );
-    let leftFill = new THREE.Mesh( archFill, stageMaterial0 );
+    let leftFill = new THREE.Mesh( archFill, stageMaterial1 );
     leftFill.position.set( -350,100,250+depthOffset );
     scene.add( leftFill );
 
-    let rightFill = new THREE.Mesh( archFill, stageMaterial0 );
+    let rightFill = new THREE.Mesh( archFill, stageMaterial1 );
     rightFill.position.set( 350,100,250+depthOffset );
     scene.add( rightFill );
 
     // ground
 
     let floorPlane = new THREE.PlaneGeometry( 1000, 500 );
-    let floor = new THREE.Mesh( floorPlane, stageMaterial0 );
+    let floor = new THREE.Mesh( floorPlane, stageMaterial1 );
     floor.position.set( 0,-250,depthOffset );
     floor.rotation.set( -1.5708,0,0 );
     scene.add(floor);
@@ -547,7 +547,7 @@ function stage3(depthOffset) {
     // ground
 
     let ground = new THREE.BoxGeometry( 980, 30, 480 );
-    let groundMain = new THREE.Mesh( ground, stageMaterial2 );
+    let groundMain = new THREE.Mesh( ground, stageMaterial1 );
     groundMain.position.set ( 0,-235,0+depthOffset );
     scene.add ( groundMain );
 
@@ -573,8 +573,6 @@ function stage3(depthOffset) {
     rightEdge.position.set( 495, -230, 0+depthOffset );
     scene.add( rightEdge );
 
-    
-
 }
 
 function props3(depthOffset) {
@@ -585,7 +583,7 @@ function props3(depthOffset) {
 
     for ( let i = 0; i < 4000; i ++ ) {
 
-        const mesh = new THREE.Mesh( grass, stageMaterial0 );
+        const mesh = new THREE.Mesh( grass, greenery1 );
 
         if (i < 2000) {
             mesh.position.set( (Math.random()*300)+175, -215, (Math.random()*470)-240+depthOffset );
