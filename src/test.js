@@ -66,9 +66,9 @@ function init() {
 
      // lighting
 
-     scene.add( new THREE.AmbientLight( 0xcccccc ) );
+     scene.add( new THREE.AmbientLight( 0xcccccc, 3 ) );
 
-     const light = new THREE.DirectionalLight( 0xffffff, 3 );
+     const light = new THREE.DirectionalLight( 0xffffff, 1 );
      light.position.set( 1, 1, 1 );
      scene.add( light );
 
@@ -78,23 +78,23 @@ function init() {
 
     // stage 1 and objects
 
-    stage1(-3000);
-    props1(-3000);
+    stage1(0);
+    props1(0);
 
     // stage 2 and objects
 
-    stage2(-1000);
-    props2(-1000);
+    stage2(-2000);
+    props2(-2000);
 
     // stage 3 and objects
 
-    stage3(-2000);
-    props3(-2000);
+    stage3(-3000);
+    props3(-3000);
 
     // stage 4 and objects
 
-    stage4(0);
-    props4(0);
+    stage4(-1000);
+    props4(-1000);
 
     // orbit controls for debugging
 
@@ -652,19 +652,19 @@ function stage4(depthOffset) {
     let floorShort = new THREE.BoxGeometry( 400, 200, 10 );
 
     let floorTop = new THREE.Mesh( floorLong, stageMaterial2 );
-    floorTop.position.set( 0, 175, -245-depthOffset );
+    floorTop.position.set( 0, 175, -245+depthOffset );
     scene.add( floorTop );
 
     let floorBottom = new THREE.Mesh( floorLong, stageMaterial2 );
-    floorBottom.position.set( 0, -175, -245-depthOffset );
+    floorBottom.position.set( 0, -175, -245+depthOffset );
     scene.add( floorBottom );
 
     let floorRight = new THREE.Mesh( floorShort, stageMaterial2 );
-    floorRight.position.set( 300, 0, -245-depthOffset );
+    floorRight.position.set( 300, 0, -245+depthOffset );
     scene.add( floorRight );
 
     let floorLeft = new THREE.Mesh( floorShort, stageMaterial2 );
-    floorLeft.position.set( -300, 0, -245-depthOffset );
+    floorLeft.position.set( -300, 0, -245+depthOffset );
     scene.add( floorLeft );
 
     // well 
@@ -675,12 +675,12 @@ function stage4(depthOffset) {
     let wellInner = new THREE.CylinderGeometry( 90, 90, 40, 32, 1, true );
 
     let wellOutside = new THREE.Mesh( wellOuter, stageMaterial1 );
-    wellOutside.position.set( 0, 0, -230-depthOffset );
+    wellOutside.position.set( 0, 0, -230+depthOffset );
     wellOutside.rotation.set( 1.5708, 0, 0 );
     scene.add( wellOutside );
 
     let wellInside = new THREE.Mesh( wellInner, stageMaterial1 );
-    wellInside.position.set( 0, 0, -230-depthOffset );
+    wellInside.position.set( 0, 0, -230+depthOffset );
     wellInside.rotation.set( 1.5708, 0, 0 );
     scene.add( wellInside );
 
@@ -688,7 +688,7 @@ function stage4(depthOffset) {
 
     let wellRim = new THREE.RingGeometry( 90, 100, 32, 1 );
     let wellTop = new THREE.Mesh( wellRim, stageMaterial1 );
-    wellTop.position.set( 0, 0, -210-depthOffset );
+    wellTop.position.set( 0, 0, -210+depthOffset );
     scene.add( wellTop );
 
     // walkway
@@ -697,23 +697,23 @@ function stage4(depthOffset) {
 
     let wellGround = new THREE.RingGeometry( 100, 200, 32, 1 );
     let wellBottom = new THREE.Mesh( wellGround, stageMaterial0 );
-    wellBottom.position.set( 0, 0, -230-depthOffset );
+    wellBottom.position.set( 0, 0, -230+depthOffset );
     scene.add( wellBottom );
 
     let groundRim = new THREE.CylinderGeometry( 200, 200, 10, 32, 1, true );
     let circleWall = new THREE.Mesh( groundRim, stageMaterial0 );
-    circleWall.position.set( 0, 0, -235-depthOffset );
+    circleWall.position.set( 0, 0, -235+depthOffset );
     circleWall.rotation.set( 1.5708, 0, 0 );
     scene.add( circleWall ); 
 
     let sideWalk = new THREE.BoxGeometry( 350, 100, 10 );
 
     let sidewalkRight = new THREE.Mesh( sideWalk, stageMaterial0 );
-    sidewalkRight.position.set( 325, 0, -235-depthOffset );
+    sidewalkRight.position.set( 325, 0, -235+depthOffset );
     scene.add( sidewalkRight );
 
     let sidewalkLeft = new THREE.Mesh( sideWalk, stageMaterial0 );
-    sidewalkLeft.position.set( -325, 0, -235-depthOffset );
+    sidewalkLeft.position.set( -325, 0, -235+depthOffset );
     scene.add( sidewalkLeft );
 
 }
