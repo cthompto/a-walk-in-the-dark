@@ -13,7 +13,7 @@ import Stats from 'three/addons/Stats.js';
 
 // global variables
 
-let camera, cameraMove, composer, controls, halftoneParams, halftonePass, object, matLine, matLine2, matLine3, originObject, originObject2, plane, planeFrame, planeMat, planeWire, renderer, renderPass, scene, postProcessing, wireframe, wireframe2, wireframe3, zTarget;
+let camera, cameraMove, composer, controls, figureTop, figureBottom, halftoneParams, halftonePass, object, matLine, matLine2, matLine3, originObject, originObject2, aniObject4, plane, planeFrame, planeMat, planeWire, renderer, renderPass, scene, postProcessing, wireframe, wireframe2, wireframe3, zTarget;
 
 // global shapes
 
@@ -35,7 +35,10 @@ const stageMaterial00 = new THREE.MeshPhongMaterial( { color: 0xFF0085, flatShad
 
 let filterToggle = false;
 let greyToggle = true;
-let lastTime;
+let lineMove4 = true;
+let rotMove4 = false;
+let direction4 = true;
+let directionB4 = true;
 
 // stats
 
@@ -79,8 +82,8 @@ function init() {
 
     // stage 1 and objects
 
-    stage1(0);
-    props1(0);
+    stage1(-2000);
+    props1(-2000);
     animation1();
 
     // stage 2 and objects
@@ -95,8 +98,8 @@ function init() {
 
     // stage 4 and objects
 
-    stage4(-2000);
-    props4(-2000);
+    stage4(0);
+    props4(0);
 
     // stage 5 and objects
 
@@ -138,6 +141,9 @@ function animate() {
     
     animation1();
     animation2();
+    animation3();
+    animation4();
+    animation5();
 
     // camera movement
 
@@ -428,7 +434,6 @@ function props1(depthOffset) {
         const mesh = new THREE.Mesh( basicSphere, stageMaterial2 );
 
         mesh.position.set( Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5 ).normalize();
-        //mesh.translateZ(-1000);
         mesh.position.multiplyScalar( Math.random() * 100 );
         mesh.rotation.set( Math.random() * 2, Math.random() * 2, Math.random() * 2 );
         mesh.scale.x = mesh.scale.y = mesh.scale.z = Math.random() * 30 + 30;
@@ -747,10 +752,60 @@ function stage4(depthOffset) {
 
 function props4(depthOffset) {
 
+    aniObject4 = new THREE.Object3D();
+    aniObject4.position.set( 0,0,-195+depthOffset );
+    scene.add( aniObject4 );
+
+    let figureMesh = new THREE.CylinderGeometry( 0, 25, 75, 32, 1 );
+    
+    figureBottom = new THREE.Mesh( figureMesh, stageMaterial00 );
+    figureBottom.position.set( -645,0,0 );
+    figureBottom.rotation.set( 1.5708, 0, 0 );
+    aniObject4.add( figureBottom );
+
+    console.log(figureBottom.position.y);
+
 }
 
 function animation4() {
 
+    if (lineMove4) {
+        if (direction4) {
+            if (figureBottom.position.x < -145 ) {
+                figureBottom.position.x += 1;
+            } else if (figureBottom.position.x == -145) {
+                lineMove4 = false;
+                let randomPick = Math.random();
+                if (randomPick  < 0.5 ) {
+                    directionB4 = true;
+                } else {
+                    directionB4 = false;
+                }
+                rotMove4 = true;
+            }
+        } else if (!direction4) {
+            figureBottom.position.x -= 1;
+
+            if (figureBottom.position.x <= -645) {
+                aniObject4.rotation.set ( 0 , 0 ,0 );
+                direction4 = true;
+            }
+        }
+    }
+    
+    if (rotMove4) {
+        if(directionB4) {
+            aniObject4.rotation.z += 0.005;
+        } else if (!directionB4) {
+            aniObject4.rotation.z -= 0.005;
+        }
+        if(aniObject4.rotation.z >= 3.14159 || aniObject4.rotation.z <= -3.14159) {
+            rotMove4 = false;
+            direction4 = false;
+            lineMove4 = true;
+        }
+    }
+    
 }
 
 // stage 5
