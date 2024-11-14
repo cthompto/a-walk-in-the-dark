@@ -20,7 +20,6 @@ let camera, cameraMove, composer, controls, halftoneParams, halftonePass, object
 const basicSphere = new THREE.SphereGeometry( 1.5, 16, 16 );
 const geo = new THREE.BoxGeometry( 1000, 500, 500, 40,20,20 ); // large scene box
 
-
 // global materials
 
 const greenery1 = new THREE.MeshPhongMaterial( { color: 0x2d7d2c, flatShading: true, side: THREE.DoubleSide } );
@@ -76,12 +75,13 @@ function init() {
 
     // scene wireframe structure
 
-    //sceneStructure();
+    sceneStructure();
 
     // stage 1 and objects
 
     stage1(0);
     props1(0);
+    animation1();
 
     // stage 2 and objects
 
@@ -136,22 +136,12 @@ function animate() {
     
     // animations
     
-    object.rotation.x += 0.005;
-    object.rotation.y += 0.005;
-    originObject.rotation.y += 0.005;
-    originObject2.rotation.y -= 0.004;
+    animation1();
+    animation2();
 
     // camera movement
 
-    if (camera.position.z < zTarget) {
-        camera.position.z = camera.position.z + 5;
-        cameraMove = true;
-    } else if (camera.position.z > zTarget) {
-        camera.position.z = camera.position.z - 5;
-        cameraMove = true;
-    } else {
-        cameraMove = false;
-    }
+    cameraAnimation();
 
     // render
     if (filterToggle) {
@@ -197,6 +187,20 @@ function keyboardControls(e) {
         }
     } else if (e.key == 'l') {
         console.log(renderer.log);
+    }
+}
+
+// function for animating camera move
+
+function cameraAnimation() {
+    if (camera.position.z < zTarget) {
+        camera.position.z = camera.position.z + 5;
+        cameraMove = true;
+    } else if (camera.position.z > zTarget) {
+        camera.position.z = camera.position.z - 5;
+        cameraMove = true;
+    } else {
+        cameraMove = false;
     }
 }
 
@@ -315,6 +319,8 @@ function sceneStructure() {
     wireframe3.position.set(0,0,-2000);
     scene.add( wireframe3 );
 }
+
+// stage 1
 
 function stage1(depthOffset) {
 
@@ -454,6 +460,13 @@ function props1(depthOffset) {
     })
 }
 
+function animation1() {
+    object.rotation.x += 0.005;
+    object.rotation.y += 0.005;
+}
+
+// stage 2
+
 function stage2(depthOffset) {
 
     // archway interior
@@ -542,6 +555,13 @@ function props2(depthOffset) {
 
 }
 
+function animation2() {
+    originObject.rotation.y += 0.005;
+    originObject2.rotation.y -= 0.004;
+}
+
+// stage 3
+
 function stage3(depthOffset) {
 
     // ground
@@ -599,6 +619,12 @@ function props3(depthOffset) {
     }
 
 }
+
+function animation3() {
+
+}
+
+// stage 4
 
 function stage4(depthOffset) {
 
@@ -725,6 +751,12 @@ function props4(depthOffset) {
 
 }
 
+function animation4() {
+
+}
+
+// stage 5
+
 function stage5(depthOffset) {
     const voidBox = new WireframeGeometry2( geo );
 
@@ -745,6 +777,10 @@ function stage5(depthOffset) {
 }
 
 function props5(depthOffset) {
+
+}
+
+function animation5() {
 
 }
 
