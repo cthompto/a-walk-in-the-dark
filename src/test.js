@@ -13,7 +13,7 @@ import Stats from 'three/addons/Stats.js';
 
 // global variables
 
-let camera, cameraMove, composer, controls, figureTop, figureBottom, halftoneParams, halftonePass, object, matLine, matLine2, matLine3, originObject, originObject2, aniObject4, plane, planeFrame, planeMat, planeWire, renderer, renderPass, scene, postProcessing, wireframe, wireframe2, wireframe3, zTarget;
+let camera, cameraMove, composer, controls, figureTop, figureBottom, halftoneParams, halftonePass, object, matLine, matLine2, matLine3, originObject, originObject2, aniObject4, plane, planeFrame, planeMat, planeWire, renderer, renderPass, scene, postProcessing, voidFrame, wireframe, wireframe2, wireframe3, zTarget;
 
 // global shapes
 
@@ -30,6 +30,7 @@ const stageMaterial1 = new THREE.MeshPhongMaterial( { color: 0xBDBDBD, flatShadi
 const stageMaterial2 = new THREE.MeshPhongMaterial( { color: 0x4D4D4D, flatShading: true, side: THREE.DoubleSide } );
 const stageMaterial3 = new THREE.MeshPhongMaterial( { color: 0x000000, flatShading: true, side: THREE.DoubleSide } );
 const stageMaterial00 = new THREE.MeshPhongMaterial( { color: 0xFF0085, flatShading: true, side: THREE.DoubleSide } );
+const stageMaterial01 = new THREE.MeshPhongMaterial( { color: 0x6f03a8, flatShading: true, side: THREE.DoubleSide } );
 
 // global settings
 
@@ -39,6 +40,7 @@ let lineMove4 = true;
 let rotMove4 = false;
 let direction4 = true;
 let directionB4 = true;
+let direction5 = true;
 
 // stats
 
@@ -70,11 +72,11 @@ function init() {
 
      // lighting
 
-     scene.add( new THREE.AmbientLight( 0xcccccc, 3 ) );
+    scene.add( new THREE.AmbientLight( 0xcccccc, 2 ) );
 
-     const light = new THREE.DirectionalLight( 0xffffff, 1 );
-     light.position.set( 1, 1, 1 );
-     scene.add( light );
+    const light = new THREE.DirectionalLight( 0xffffff, 0.9 );
+    light.position.set( 0, 0, 250 );
+    scene.add( light );
 
     // scene wireframe structure
 
@@ -82,9 +84,8 @@ function init() {
 
     // stage 1 and objects
 
-    stage1(-2000);
-    props1(-2000);
-    animation1();
+    stage1(0);
+    props1(0);
 
     // stage 2 and objects
 
@@ -98,8 +99,8 @@ function init() {
 
     // stage 4 and objects
 
-    stage4(0);
-    props4(0);
+    stage4(-2000);
+    props4(-2000);
 
     // stage 5 and objects
 
@@ -278,7 +279,7 @@ function sceneStructure() {
 
     } );
 
-    wireframe = new Wireframe( geometry2, matLine );
+    wireframe = new Wireframe( geometry2, planeMat );
     wireframe.computeLineDistances();
     wireframe.scale.set( 1, 1, 1 );
     scene.add( wireframe );
@@ -297,7 +298,7 @@ function sceneStructure() {
 
     } );
 
-    wireframe2 = new Wireframe( geometry3, matLine2 );
+    wireframe2 = new Wireframe( geometry3, planeMat );
     wireframe2.computeLineDistances();
     wireframe2.scale.set( 1, 1, 1 );
     wireframe2.position.set(0,0,-1000);
@@ -317,7 +318,7 @@ function sceneStructure() {
 
     } );
 
-    wireframe3 = new Wireframe( geometry4, matLine3 );
+    wireframe3 = new Wireframe( geometry4, planeMat );
     wireframe3.computeLineDistances();
     wireframe3.scale.set( 1, 1, 1 );
     wireframe3.position.set(0,0,-2000);
@@ -431,7 +432,7 @@ function props1(depthOffset) {
 
     for ( let i = 0; i < 10; i ++ ) {
 
-        const mesh = new THREE.Mesh( basicSphere, stageMaterial2 );
+        const mesh = new THREE.Mesh( basicSphere, stageMaterial01 );
 
         mesh.position.set( Math.random() - 0.5, Math.random() - 0.5, Math.random() - 0.5 ).normalize();
         mesh.position.multiplyScalar( Math.random() * 100 );
@@ -530,7 +531,7 @@ function props2(depthOffset) {
 
     for ( let i = 0; i < 15; i ++ ) {
 
-        const mesh = new THREE.Mesh( circleGeometry, material );
+        const mesh = new THREE.Mesh( circleGeometry, stageMaterial01 );
 
         mesh.position.set( Math.random() - 0.5, 0, Math.random() - 0.5 ).normalize();
         mesh.position.multiplyScalar( Math.random() * 125 );
@@ -546,7 +547,7 @@ function props2(depthOffset) {
 
     for ( let i = 0; i < 15; i ++ ) {
 
-        const mesh = new THREE.Mesh( circleGeometry, material );
+        const mesh = new THREE.Mesh( circleGeometry, stageMaterial01 );
 
         mesh.position.set( Math.random() - 0.5, 0, Math.random() - 0.5 ).normalize();
         mesh.position.multiplyScalar( Math.random() * 125 );
@@ -570,29 +571,34 @@ function stage3(depthOffset) {
     // ground
 
     let ground = new THREE.BoxGeometry( 980, 30, 480 );
-    let groundMain = new THREE.Mesh( ground, stageMaterial1 );
+    let groundMain = new THREE.Mesh( ground, dirt );
     groundMain.position.set ( 0,-235,0+depthOffset );
     scene.add ( groundMain );
+
+    let newLight2 = new THREE.DirectionalLight( 0xffffff, 5 );
+    newLight2.position.set ( 0, 0, 0+depthOffset );
+    newLight2.target = groundMain;
+    //scene.add( newLight2 );
 
     // outer lip
 
     let longEdge = new THREE.BoxGeometry( 1000, 40, 10 );
 
-    let edgeFront = new THREE.Mesh( longEdge, stageMaterial1 );
+    let edgeFront = new THREE.Mesh( longEdge, stageMaterial2 );
     edgeFront.position.set(0, -230, -245+depthOffset );
     scene.add( edgeFront );
 
-    let edgeBack = new THREE.Mesh( longEdge, stageMaterial1 );
+    let edgeBack = new THREE.Mesh( longEdge, stageMaterial2 );
     edgeBack.position.set(0, -230, 245+depthOffset );
     scene.add( edgeBack );
 
     let shortEdge = new THREE.BoxGeometry( 10, 40, 480 );
 
-    let leftEdge = new THREE.Mesh( shortEdge, stageMaterial1 );
+    let leftEdge = new THREE.Mesh( shortEdge, stageMaterial2 );
     leftEdge.position.set( -495, -230, 0+depthOffset );
     scene.add( leftEdge );
 
-    let rightEdge = new THREE.Mesh( shortEdge, stageMaterial1 );
+    let rightEdge = new THREE.Mesh( shortEdge, stageMaterial2 );
     rightEdge.position.set( 495, -230, 0+depthOffset );
     scene.add( rightEdge );
 
@@ -758,7 +764,7 @@ function props4(depthOffset) {
 
     let figureMesh = new THREE.CylinderGeometry( 0, 25, 75, 32, 1 );
     
-    figureBottom = new THREE.Mesh( figureMesh, stageMaterial00 );
+    figureBottom = new THREE.Mesh( figureMesh, stageMaterial01 );
     figureBottom.position.set( -645,0,0 );
     figureBottom.rotation.set( 1.5708, 0, 0 );
     aniObject4.add( figureBottom );
@@ -815,26 +821,44 @@ function stage5(depthOffset) {
 
 	let voidLine = new LineMaterial( {
 
-		color: 0xFFFFFF,
+		color: 0x6f03a8,
         linewidth: 2, // in pixels
-        opacity: 0.2,
+        opacity: .9,
         dashed: false,
         transparent: true
 
     } );
 
-    let voidFrame = new Wireframe( voidBox, voidLine );
+    voidFrame = new Wireframe( voidBox, voidLine );
     voidFrame.computeLineDistances();
     voidFrame.position.set(0,0,0+depthOffset);
     scene.add( voidFrame );
 }
 
 function props5(depthOffset) {
-
+    let newLight = new THREE.DirectionalLight( 0xffffff, 3 );
+    newLight.position.set ( 0, 1000, 0 );
+    newLight.target = voidFrame;
+    scene.add( newLight.target );
 }
 
 function animation5() {
-
+    if (direction5) {
+        voidFrame.scale.y -= 0.0005;
+        voidFrame.scale.x -= 0.0005;
+        voidFrame.scale.z -= 0.0005;
+        if (voidFrame.scale.y < .9) {
+            direction5 = false;
+        }
+    } else if (!direction5) {
+        voidFrame.scale.y += 0.0005;
+        voidFrame.scale.x += 0.0005;
+        voidFrame.scale.z += 0.0005;
+        if (voidFrame.scale.y > 1) {
+            direction5 = true;
+        }
+    }
+    
 }
 
 // degrees to radians
