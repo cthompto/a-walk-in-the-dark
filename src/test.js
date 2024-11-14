@@ -163,12 +163,10 @@ function keyboardControls(e) {
     if (!cameraMove) {
         if (e.key == 'w') {
             zTarget = camera.position.z-1000;
-            //camera.position.z = camera.position.z-1000;
             console.log('w');
             console.log(zTarget);
         } else if (e.key == 's') {
             zTarget = camera.position.z+1000;
-            //camera.position.z = camera.position.z+1000;
             console.log('s');
             console.log(zTarget);
         }
@@ -224,7 +222,7 @@ function halftoneEffect() {
 					rotateR: Math.PI / 12,
 					rotateB: Math.PI / 12 * 2,
 					rotateG: Math.PI / 12 * 3,
-					scatter: 0,
+					scatter: .75,
 					blending: 1,
 					blendingMode: 1,
 					greyscale: true,
