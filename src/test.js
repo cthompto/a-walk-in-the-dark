@@ -575,10 +575,14 @@ function stage3(depthOffset) {
     groundMain.position.set ( 0,-235,0+depthOffset );
     scene.add ( groundMain );
 
-    let newLight2 = new THREE.DirectionalLight( 0xffffff, 5 );
-    newLight2.position.set ( 0, 0, 0+depthOffset );
-    newLight2.target = groundMain;
-    //scene.add( newLight2 );
+    // let newLight2 = new THREE.DirectionalLight( 0xffffff, 3 );
+    // newLight2.position.set ( 0, 2000, 0+depthOffset );
+    // newLight2.target = groundMain;
+    // groundMain.add( newLight2 );
+
+    let pointLight = new THREE.PointLight( 0xfffffff, 20, 700, 0.2 );
+    pointLight.position.set( 0, 0, 0+depthOffset );
+    scene.add( pointLight );
 
     // outer lip
 
