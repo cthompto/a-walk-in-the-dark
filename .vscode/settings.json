@@ -6,5 +6,6 @@
         "Phong",
         "rightside",
         "Wireframe"
-    ]
+    ],
+    "liveServer.settings.port": 5501
 }

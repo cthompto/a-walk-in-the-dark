@@ -35,7 +35,7 @@ const stageMaterial01 = new THREE.MeshPhongMaterial( { color: 0x6f03a8, flatShad
 // global settings
 
 let filterToggle = false;
-let greyToggle = true;
+//let greyToggle = true;
 let lineMove4 = true;
 let rotMove4 = false;
 let direction4 = true;
