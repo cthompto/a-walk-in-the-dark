@@ -759,7 +759,7 @@ function stage4(depthOffset) {
     scene.add( sidewalkLeft );
 
 }
-
+// test
 function props4(depthOffset) {
 
     aniObject4 = new THREE.Object3D();
