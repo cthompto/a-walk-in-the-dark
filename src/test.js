@@ -34,7 +34,7 @@ const stageMaterial01 = new THREE.MeshPhongMaterial( { color: 0x6f03a8, flatShad
 
 // global settings
 
-let filterToggle = false;
+let filterToggle = true;
 //let greyToggle = true;
 let lineMove4 = true;
 let rotMove4 = false;
@@ -445,7 +445,7 @@ function props1(depthOffset) {
     // title text
 
     const loader = new FontLoader();
-    loader.load('../assets/fonts/Quantico/Quantico_Bold.json', function ( font ) {
+    loader.load('./assets/fonts/Quantico/Quantico_Bold.json', function ( font ) {
         const fontColor = 0xffffff;
         const fontMat = new THREE.LineBasicMaterial( {
             color: fontColor,
