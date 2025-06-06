@@ -3,5 +3,8 @@ An online 3D interactive exploration of visibility and power. Inspired by tunnel
 
 ## Public Access Memories Log June 2025
 
-**6/2/2025**
+**6/2**
 Getting the piece in working order for embedding into PAM site.
+
+**6/3 - 6/6**
+Refining camera controls (still working on this)
