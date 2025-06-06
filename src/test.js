@@ -13,7 +13,7 @@ import Stats from 'three/addons/Stats.js';
 
 // global variables
 
-let camera, cameraMove, composer, controls, figureTop, figureBottom, halftoneParams, halftonePass, object, matLine, matLine2, matLine3, originObject, originObject2, aniObject4, plane, planeFrame, planeMat, planeWire, renderer, renderPass, scene, postProcessing, voidFrame, wireframe, wireframe2, wireframe3, zTarget;
+let camera, cameraDirection, cameraMove, composer, controls, figureTop, figureBottom, halftoneParams, halftonePass, object, matLine, matLine2, matLine3, originObject, originObject2, aniObject4, plane, planeFrame, planeMat, planeWire, renderer, renderPass, scene, postProcessing, voidFrame, wireframe, wireframe2, wireframe3, zTarget;
 
 // global shapes
 
@@ -111,17 +111,17 @@ function init() {
 
     controls = new OrbitControls( camera, renderer.domElement );
     controls.listenToKeyEvents( window );
-    controls.enableDamping = true;
-    controls.dampingFactor = 0.05;
+    controls.enableDamping = false;
     controls.screenSpacePanning = false;
-    controls.enableZoom = false;
-    // controls.minDistance = 0;
+    controls.enableZoom = true;
+    controls.enablePan = false;
+    // controls.minZoom = 0;
     // controls.maxDistance = 0;
     controls.minPolarAngle = Math.PI * 0.47;
     controls.maxPolarAngle = Math.PI * 0.53;
     controls.minAzimuthAngle = (Math.PI*4) * 0.49;
     controls.maxAzimuthAngle = (Math.PI*4) * 0.51;
-
+    controls.update();
     // window resizer
 
     window.addEventListener( 'resize', onWindowResize );
@@ -141,7 +141,7 @@ function init() {
 function animate() {
 
     stats.begin();
-    
+    console.log(camera.position.z);
     // animations
     
     animation1();
@@ -151,9 +151,9 @@ function animate() {
     animation5();
 
     // camera movement
-
+    //controls.update();
     cameraAnimation();
-
+    
     // render
     if (filterToggle) {
         composer.render( scene, camera );
@@ -174,9 +174,11 @@ function keyboardControls(e) {
     if (!cameraMove) {
         if (e.key == 'w') {
             zTarget = camera.position.z-1000;
+            cameraDirection = "forward";
             console.log('w');
             console.log(zTarget);
         } else if (e.key == 's') {
+            cameraDirection = "backward";
             zTarget = camera.position.z+1000;
             console.log('s');
             console.log(zTarget);
@@ -202,15 +204,24 @@ function keyboardControls(e) {
 // function for animating camera move
 
 function cameraAnimation() {
-    if (camera.position.z <= zTarget) {
-        camera.position.z = camera.position.z + 5;
-        cameraMove = true;
-    } else if (camera.position.z >= zTarget) {
-        camera.position.z = camera.position.z - 5;
-        cameraMove = true;
+    if (cameraDirection == "backward") {
+        if (camera.position.z <= zTarget) {
+            camera.position.set(0,0,camera.position.z + 5);
+            //controls.update();
+            cameraMove = true;
+        }
+        cameraMove = false;
+    } else if (cameraDirection == "forward") {
+        if (camera.position.z >= zTarget) {
+            camera.position.set(0,0,camera.position.z - 5);
+            //controls.update();
+            cameraMove = true;
+        }
+        cameraMove = false;
     } else {
         cameraMove = false;
     }
+    
 }
 
 // function for resizing scene when the window resizes
