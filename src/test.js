@@ -114,9 +114,13 @@ function init() {
     controls.enableDamping = true;
     controls.dampingFactor = 0.05;
     controls.screenSpacePanning = false;
-    controls.minDistance = 100;
-    controls.maxDistance = 10000;
-    controls.maxPolarAngle = Math.PI / 2;
+    controls.enableZoom = false;
+    // controls.minDistance = 0;
+    // controls.maxDistance = 0;
+    controls.minPolarAngle = Math.PI * 0.47;
+    controls.maxPolarAngle = Math.PI * 0.53;
+    controls.minAzimuthAngle = (Math.PI*4) * 0.49;
+    controls.maxAzimuthAngle = (Math.PI*4) * 0.51;
 
     // window resizer
 
@@ -198,10 +202,10 @@ function keyboardControls(e) {
 // function for animating camera move
 
 function cameraAnimation() {
-    if (camera.position.z < zTarget) {
+    if (camera.position.z <= zTarget) {
         camera.position.z = camera.position.z + 5;
         cameraMove = true;
-    } else if (camera.position.z > zTarget) {
+    } else if (camera.position.z >= zTarget) {
         camera.position.z = camera.position.z - 5;
         cameraMove = true;
     } else {
