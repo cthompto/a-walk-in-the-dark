@@ -5,21 +5,49 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>A Walk in The Dark - Chelsea Thompto</title>
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌑</text></svg>">
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌑</text></svg>"
+    />
     <link rel="stylesheet" href="./style/style.css" />
     <script type="importmap">
-        {
-            "imports": {
-                "three": "./build/three.module.min.js",
-                "three/tsl": "./build/three.webgpu.min.js",
-                "three/addons/": "./add-ons/"
-            }
+      {
+        "imports": {
+          "three": "./build/three.module.min.js",
+          "three/tsl": "./build/three.webgpu.min.js",
+          "three/addons/": "./add-ons/"
         }
+      }
     </script>
     <script src="./add-ons/Stats.js" type="module"></script>
     <script src="./src/test.js" type="module"></script>
   </head>
   <body>
+    <div id="blocker">
+      <div id="instructions">
+        <br />
+        <h1>A Walk in The Dark</h1>
+        <p class="move-mid">Use the "W" key to move forward.</p>
+        <p class="move-mid">Use the "S" key to move backward.</p>
+        <p></p>
+        <p class="move-mid">Availble during work in progress status only:</p>
+        <p class="move-mid">
+          Use "Q" key to toggle haslftone filter and "G" key to toggle filter
+          color.
+        </p>
+        <br /><br />
+        <button id="startButton">Click To Enter</button>
+        <!-- <label id="audioBox" for="audioCheck">Audio On: 
+        <input
+          type="checkbox"
+          id="audioCheck"
+          name="audioCheck"
+          checked="true"
+          value="on" />
+        </label> -->
+        <br /><br />
+      </div>
+    </div>
     <!-- <h1>
         Test Page
     </h1> -->

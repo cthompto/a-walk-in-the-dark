@@ -8,3 +8,6 @@ Getting the piece in working order for embedding into PAM site.
 
 **6/3 - 6/6**
 Refining camera controls (still working on this)
+
+**6/4 - 6/10**
+Added overlay to page load with instructions and finished current version of camera controls.

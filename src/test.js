@@ -70,7 +70,25 @@ function init() {
     scene.fog = new THREE.Fog( 0x000000, 150, 1500 );
     scene.background =  new THREE.Color( 0x151515 );
 
-     // lighting
+    // overlay
+
+    // Identify the html divs for the overlays
+    const blocker = document.getElementById("blocker");
+    const instructions = document.getElementById("instructions");
+    const button = document.getElementById("startButton");
+
+    // Listen for clicks and respond by removing overlays and starting mouse look controls
+    button.addEventListener("click", function () {
+        instructions.style.display = "none";
+        blocker.style.display = "none";
+        chosen = true;
+        audioStart();
+        if (audioOn) {
+            audioToggle();
+        }
+    });
+
+    // lighting
 
     scene.add( new THREE.AmbientLight( 0xcccccc, 2 ) );
 
@@ -109,19 +127,20 @@ function init() {
 
     // orbit controls for debugging
 
-    controls = new OrbitControls( camera, renderer.domElement );
-    controls.listenToKeyEvents( window );
-    controls.enableDamping = false;
-    controls.screenSpacePanning = false;
-    controls.enableZoom = true;
-    controls.enablePan = false;
-    // controls.minZoom = 0;
-    // controls.maxDistance = 0;
-    controls.minPolarAngle = Math.PI * 0.47;
-    controls.maxPolarAngle = Math.PI * 0.53;
-    controls.minAzimuthAngle = (Math.PI*4) * 0.49;
-    controls.maxAzimuthAngle = (Math.PI*4) * 0.51;
-    controls.update();
+    // controls = new OrbitControls( camera, renderer.domElement );
+    // controls.listenToKeyEvents( window );
+    // controls.enableDamping = false;
+    // controls.screenSpacePanning = false;
+    // controls.enableZoom = true;
+    // controls.enablePan = false;
+    // // controls.minZoom = 0;
+    // // controls.maxDistance = 0;
+    // controls.minPolarAngle = Math.PI * 0.47;
+    // controls.maxPolarAngle = Math.PI * 0.53;
+    // controls.minAzimuthAngle = (Math.PI*4) * 0.49;
+    // controls.maxAzimuthAngle = (Math.PI*4) * 0.51;
+    // controls.update();
+
     // window resizer
 
     window.addEventListener( 'resize', onWindowResize );
