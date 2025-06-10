@@ -1,0 +1,12 @@
+Public Access Memories Log June 2025
+
+*6/2*
+Getting the piece in working order for embedding into PAM site.
+
+*6/3 - 6/6*
+Refining camera controls (still working on this)
+
+*6/4 - 6/10*
+Added overlay to page load with instructions.
+Finished current version of camera controls.
+Created new log doc.
