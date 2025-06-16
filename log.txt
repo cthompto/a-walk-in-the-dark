@@ -10,3 +10,6 @@ Refining camera controls (still working on this)
 Added overlay to page load with instructions.
 Finished current version of camera controls.
 Created new log doc.
+
+*6/11 - 6/16*
+Writing text for the scenes and drawing out new scenes to be coded.
