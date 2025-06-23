@@ -45,6 +45,8 @@ let rotMove4 = false;
 let direction4 = true;
 let directionB4 = true;
 let direction5 = true;
+var frameLengthMS = 1000/61;//60 fps
+var previousTime = 0;
 
 // stats
 
@@ -170,12 +172,13 @@ function init() {
 
 }
 
-// animation and render loop
+// animation and render loop without frame rate lock
 
+/*
 function animate() {
 
     stats.begin();
-    console.log(camera.position.z);
+    //console.log(camera.position.z);
     // animations
     
     animation1();
@@ -197,6 +200,40 @@ function animate() {
 
     stats.end();
     
+}
+*/
+
+// animation and render loop with frame rate lock
+
+function animate(timestamp){
+stats.begin();
+  if(timestamp - previousTime > frameLengthMS){
+   /* your rendering logic goes here */
+        // animations
+    
+    animation1();
+    animation2();
+    animation3();
+    animation4();
+    animation5();
+
+    // camera movement
+    //controls.update();
+    cameraAnimation();
+    
+    // render
+    if (filterToggle) {
+        composer.render( scene, camera );
+    } else if (!filterToggle) {
+        renderer.render( scene, camera );
+    }
+   /* * * * */
+    previousTime = timestamp;
+    stats.end();
+  }
+  
+  requestAnimationFrame(animate);
+  
 }
 
 // user interaction and effects functions
@@ -927,7 +964,6 @@ function stage6(depthOffset) {
 }
 
 function props6(depthOffset) {
-    // grass
 
     let block = new THREE.BoxGeometry( 1,1,1 ); 
 
@@ -940,8 +976,6 @@ function props6(depthOffset) {
         } else {
             mesh = new THREE.Mesh( block, stageMaterial0 );
         }
-
-        
 
         if (i < 50) {
             mesh.position.set( (Math.random()*300)+100, (Math.random()*470)-240 , -215+depthOffset );
