@@ -12,4 +12,7 @@ Finished current version of camera controls.
 Created new log doc.
 
 *6/11 - 6/16*
-Writing text for the scenes and drawing out new scenes to be coded.
+Wrote text for the scenes and drew out new scenes to be coded.
+
+*6/17 - 6/23*
+Continued drafting new scenes and texts. Added one new scene and implemented a scene shuffling system as well as a frame rate limiter.
