@@ -13,7 +13,7 @@ import Stats from 'three/addons/Stats.js';
 
 // global variables
 
-let camera, cameraDirection, cameraMove, composer, controls, figureTop, figureBottom, halftoneParams, halftonePass, object, matLine, matLine2, matLine3, originObject, originObject2, aniObject4, plane, planeFrame, planeMat, planeWire, renderer, renderPass, scene, postProcessing, voidFrame, wireframe, wireframe2, wireframe3, zTarget;
+let audioOn, camera, cameraDirection, cameraMove, chosen, composer, controls, figureTop, figureBottom, halftoneParams, halftonePass, object, matLine, matLine2, matLine3, originObject, originObject2, aniObject4, plane, planeFrame, planeMat, planeWire, renderer, renderPass, scene, postProcessing, voidFrame, wireframe, wireframe2, wireframe3, zTarget;
 
 // global shapes
 
@@ -31,6 +31,10 @@ const stageMaterial2 = new THREE.MeshPhongMaterial( { color: 0x4D4D4D, flatShadi
 const stageMaterial3 = new THREE.MeshPhongMaterial( { color: 0x000000, flatShading: true, side: THREE.DoubleSide } );
 const stageMaterial00 = new THREE.MeshPhongMaterial( { color: 0xFF0085, flatShading: true, side: THREE.DoubleSide } );
 const stageMaterial01 = new THREE.MeshPhongMaterial( { color: 0x6f03a8, flatShading: true, side: THREE.DoubleSide } );
+
+// array for scene spacing
+
+let spaceArray = [-1000,-2000,-3000,-4000,-5000];
 
 // global settings
 
@@ -82,7 +86,7 @@ function init() {
         instructions.style.display = "none";
         blocker.style.display = "none";
         chosen = true;
-        audioStart();
+        //audioStart();
         if (audioOn) {
             audioToggle();
         }
@@ -98,32 +102,38 @@ function init() {
 
     // scene wireframe structure
 
-    sceneStructure();
+    //sceneStructure();
+    titleText(0);
+
+    // shuffle scenes
+
+    shuffle(spaceArray);
+    console.log(spaceArray);
 
     // stage 1 and objects
 
-    stage1(0);
-    props1(0);
+    stage1(spaceArray[0]);
+    props1(spaceArray[0]);
 
     // stage 2 and objects
 
-    stage2(-1000);
-    props2(-1000);
+    stage2(spaceArray[1]);
+    props2(spaceArray[1]);
 
     // stage 3 and objects
 
-    stage3(-4000);
-    props3(-4000);
+    stage3(spaceArray[2]);
+    props3(spaceArray[2]);
 
     // stage 4 and objects
 
-    stage4(-2000);
-    props4(-2000);
+    stage4(spaceArray[3]);
+    props4(spaceArray[3]);
 
     // stage 5 and objects
 
-    stage5(-3000);
-    props5(-3000);
+    stage5(spaceArray[4]);
+    props5(spaceArray[4]);
 
     // orbit controls for debugging
 
@@ -266,7 +276,7 @@ function halftoneEffect() {
 					scatter: .75,
 					blending: 1,
 					blendingMode: 1,
-					greyscale: true,
+					greyscale: false,
 					disable: false
 				};
 	halftonePass = new HalftonePass( window.innerWidth, window.innerHeight, halftoneParams );
@@ -357,6 +367,31 @@ function sceneStructure() {
     wireframe3.scale.set( 1, 1, 1 );
     wireframe3.position.set(0,0,-2000);
     scene.add( wireframe3 );
+}
+
+// title card
+
+function titleText(depthOffset) {
+    // title text
+
+    const loader = new FontLoader();
+    loader.load('./assets/fonts/Quantico/Quantico_Bold.json', function ( font ) {
+        const fontColor = 0xffffff;
+        const fontMat = new THREE.LineBasicMaterial( {
+            color: fontColor,
+            side: THREE.DoubleSide
+        } );
+
+        const message = ' A Walk in The Dark'
+        const shapes = font.generateShapes( message, 25 );
+        const fontGeo = new THREE.ShapeGeometry( shapes );
+        fontGeo.computeBoundingBox();
+        const xMid = - 0.5 * ( fontGeo.boundingBox.max.x - fontGeo.boundingBox.min.x );
+		fontGeo.translate( xMid, 0, 0 );
+        const text = new THREE.Mesh( fontGeo, fontMat );
+		text.position.z = 250+depthOffset;
+		scene.add( text );
+    })
 }
 
 // stage 1
@@ -476,26 +511,7 @@ function props1(depthOffset) {
 
     }
 
-    // title text
-
-    const loader = new FontLoader();
-    loader.load('./assets/fonts/Quantico/Quantico_Bold.json', function ( font ) {
-        const fontColor = 0xffffff;
-        const fontMat = new THREE.LineBasicMaterial( {
-            color: fontColor,
-            side: THREE.DoubleSide
-        } );
-
-        const message = ' A Walk in The Dark'
-        const shapes = font.generateShapes( message, 25 );
-        const fontGeo = new THREE.ShapeGeometry( shapes );
-        fontGeo.computeBoundingBox();
-        const xMid = - 0.5 * ( fontGeo.boundingBox.max.x - fontGeo.boundingBox.min.x );
-		fontGeo.translate( xMid, 0, 0 );
-        const text = new THREE.Mesh( fontGeo, fontMat );
-		text.position.z = 250+depthOffset;
-		scene.add( text );
-    })
+    
 }
 
 function animation1() {
@@ -897,6 +913,24 @@ function animation5() {
         }
     }
     
+}
+
+// shuffle algo
+
+function shuffle(array) {
+  let currentIndex = array.length;
+
+  // While there remain elements to shuffle...
+  while (currentIndex != 0) {
+
+    // Pick a remaining element...
+    let randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
+
+    // And swap it with the current element.
+    [array[currentIndex], array[randomIndex]] = [
+      array[randomIndex], array[currentIndex]];
+  }
 }
 
 // degrees to radians
