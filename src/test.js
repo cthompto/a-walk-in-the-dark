@@ -2,7 +2,7 @@ import * as THREE from 'three';
 //import { pass } from 'three/tsl';
 //import { DotScreenPass } from 'three/addons/DotScreenPass.js';
 import { FontLoader } from 'three/addons/FontLoader.js';
-import { OrbitControls } from 'three/addons/OrbitControls.js';
+//import { OrbitControls } from 'three/addons/OrbitControls.js';
 import { LineMaterial } from 'three/addons/LineMaterial.js';
 import { Wireframe } from 'three/addons/Wireframe.js';
 import { WireframeGeometry2 } from 'three/addons/WireframeGeometry2.js';
@@ -103,7 +103,7 @@ function init() {
     // scene wireframe structure
 
     //sceneStructure();
-    titleText(0);
+    titleText(-100);
 
     // shuffle scenes
 
@@ -276,7 +276,7 @@ function halftoneEffect() {
 					scatter: .75,
 					blending: 1,
 					blendingMode: 1,
-					greyscale: false,
+					greyscale: true,
 					disable: false
 				};
 	halftonePass = new HalftonePass( window.innerWidth, window.innerHeight, halftoneParams );
