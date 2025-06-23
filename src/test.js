@@ -34,7 +34,7 @@ const stageMaterial01 = new THREE.MeshPhongMaterial( { color: 0x6f03a8, flatShad
 
 // array for scene spacing
 
-let spaceArray = [-1000,-2000,-3000,-4000,-5000];
+let spaceArray = [-1000,-2000,-3000,-4000,-5000,-6000];
 
 // global settings
 
@@ -134,6 +134,11 @@ function init() {
 
     stage5(spaceArray[4]);
     props5(spaceArray[4]);
+
+    // stage 6 and objects
+
+    stage6(spaceArray[5]);
+    props6(spaceArray[5]);
 
     // orbit controls for debugging
 
@@ -913,6 +918,42 @@ function animation5() {
         }
     }
     
+}
+
+// stage 6
+
+function stage6(depthOffset) {
+    
+}
+
+function props6(depthOffset) {
+    // grass
+
+    let block = new THREE.BoxGeometry( 1,1,1 ); 
+
+    for ( let i = 0; i < 100; i ++ ) {
+
+        let mesh; 
+
+        if(i%3 == 0) {
+            mesh = new THREE.Mesh( block, stageMaterial1 );
+        } else {
+            mesh = new THREE.Mesh( block, stageMaterial0 );
+        }
+
+        
+
+        if (i < 50) {
+            mesh.position.set( (Math.random()*300)+100, (Math.random()*470)-240 , -215+depthOffset );
+        } else {
+            mesh.position.set( (Math.random()*300)-400, (Math.random()*470)-240 , -215+depthOffset );
+        }
+
+        mesh.scale.x = mesh.scale.y = Math.random() * 100 + 50;
+        mesh.scale.z = Math.random() * 100 + 100;
+        scene.add( mesh );
+
+    }
 }
 
 // shuffle algo
