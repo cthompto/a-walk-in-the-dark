@@ -417,7 +417,7 @@ function titleText(depthOffset) {
     // title text
 
     const loader = new FontLoader();
-    loader.load('./assets/fonts/Quantico/Quantico_Bold.json', function ( font ) {
+    loader.load('./assets/fonts/Public_Sans/Public Sans_Bold.json', function ( font ) {
         const fontColor = 0xffffff;
         const fontMat = new THREE.LineBasicMaterial( {
             color: fontColor,
