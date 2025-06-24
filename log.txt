@@ -16,3 +16,6 @@ Wrote text for the scenes and drew out new scenes to be coded.
 
 *6/17 - 6/23*
 Continued drafting new scenes and texts. Added one new scene and implemented a scene shuffling system as well as a frame rate limiter.
+
+*6/24*
+Added scene texts, a randomizer to select scene texts, and an end card.
