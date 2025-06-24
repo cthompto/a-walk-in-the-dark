@@ -256,6 +256,9 @@ function init() {
 
   sceneTexts();
 
+  // end text
+  endText(-7000);
+
   // orbit controls for debugging
 
   // controls = new OrbitControls( camera, renderer.domElement );
@@ -533,7 +536,7 @@ function titleText(depthOffset) {
       });
 
       const message = " A Walk in The Dark";
-      const shapes = font.generateShapes(message, 25);
+      const shapes = font.generateShapes(message, 40);
       const fontGeo = new THREE.ShapeGeometry(shapes);
       fontGeo.computeBoundingBox();
       const xMid =
@@ -542,6 +545,48 @@ function titleText(depthOffset) {
       const text = new THREE.Mesh(fontGeo, fontMat);
       text.position.z = 250 + depthOffset;
       scene.add(text);
+    }
+  );
+}
+
+// end card
+
+function endText(depthOffset) {
+
+  const loader = new FontLoader();
+  loader.load(
+    "./assets/fonts/Public_Sans/Public Sans_Bold.json",
+    function (font) {
+      const fontColor = 0xffffff;
+      const fontMat = new THREE.LineBasicMaterial({
+        color: fontColor,
+        side: THREE.DoubleSide,
+      });
+
+      const message = "Refresh page to reveal more";
+      const shapes = font.generateShapes(message, 30);
+      const fontGeo = new THREE.ShapeGeometry(shapes);
+      fontGeo.computeBoundingBox();
+      const xMid =
+        -0.5 * (fontGeo.boundingBox.max.x - fontGeo.boundingBox.min.x);
+      fontGeo.translate(xMid, 0, 0);
+      const text = new THREE.Mesh(fontGeo, fontMat);
+      text.position.z = 400 + depthOffset;
+      text.position.y = 50;
+      scene.add(text);
+
+      const message1 = "texts and room combinations.";
+      const shapes1 = font.generateShapes(message1, 30);
+      const fontGeo1 = new THREE.ShapeGeometry(shapes1);
+      fontGeo1.computeBoundingBox();
+      const xMid1 =
+        -0.5 * (fontGeo1.boundingBox.max.x - fontGeo1.boundingBox.min.x);
+      fontGeo1.translate(xMid1, 0, 0);
+      const text1 = new THREE.Mesh(fontGeo1, fontMat);
+      text1.position.z = 400 + depthOffset;
+      text1.position.y = -50;
+      scene.add(text1);
+
     }
   );
 }
