@@ -146,8 +146,8 @@ var previousTime = 0;
 // stats
 
 var stats = new Stats();
-stats.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
-document.body.appendChild(stats.dom);
+//stats.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
+//document.body.appendChild(stats.dom);
 
 // scene start
 
@@ -914,7 +914,7 @@ function stage3(depthOffset) {
   // ground
 
   let ground = new THREE.BoxGeometry(980, 30, 480);
-  let groundMain = new THREE.Mesh(ground, dirt);
+  let groundMain = new THREE.Mesh(ground, stageMaterial0);
   groundMain.position.set(0, -235, 0 + depthOffset);
   scene.add(groundMain);
 
@@ -923,9 +923,9 @@ function stage3(depthOffset) {
   // newLight2.target = groundMain;
   // groundMain.add( newLight2 );
 
-  let pointLight = new THREE.PointLight(0xfffffff, 20, 700, 0.2);
-  pointLight.position.set(0, 0, 0 + depthOffset);
-  scene.add(pointLight);
+//   let pointLight = new THREE.PointLight(0xfffffff, 20, 700, 0.2);
+//   pointLight.position.set(0, 0, 0 + depthOffset);
+//   scene.add(pointLight);
 
   // outer lip
 
@@ -956,7 +956,7 @@ function props3(depthOffset) {
   let grass = new THREE.CylinderGeometry(1, 1, 1, 3);
 
   for (let i = 0; i < 4000; i++) {
-    const mesh = new THREE.Mesh(grass, greenery1);
+    const mesh = new THREE.Mesh(grass, stageMaterial01);
 
     if (i < 2000) {
       mesh.position.set(
