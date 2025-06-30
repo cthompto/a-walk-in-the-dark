@@ -174,6 +174,12 @@ function init() {
   scene.fog = new THREE.Fog(0x000000, 150, 1500);
   scene.background = new THREE.Color(0x151515);
 
+  //bg audio
+  var audio = new Audio('../assets/sounds/bg1.mp3');
+  audio.playbackRate = 0.5;
+  audio.loop = true;
+  var cb = document.querySelector("#audioCheck");
+
   // overlay
 
   // Identify the html divs for the overlays
@@ -186,9 +192,9 @@ function init() {
     instructions.style.display = "none";
     blocker.style.display = "none";
     chosen = true;
-    //audioStart();
-    if (audioOn) {
-      audioToggle();
+    if (cb.checked) {
+      audio.play();
+      console.log('audio on');
     }
   });
 
@@ -432,7 +438,7 @@ function halftoneEffect() {
     scatter: 0.75,
     blending: 1,
     blendingMode: 1,
-    greyscale: true,
+    greyscale: false,
     disable: false,
   };
   halftonePass = new HalftonePass(

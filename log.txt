@@ -19,3 +19,6 @@ Continued drafting new scenes and texts. Added one new scene and implemented a s
 
 *6/24*
 Added scene texts, a randomizer to select scene texts, and an end card.
+
+*6/25-6/30*
+Working on sound a color. Switched to color as default and added first pass at background sound/music.
