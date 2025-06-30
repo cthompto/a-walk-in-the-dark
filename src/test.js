@@ -175,7 +175,7 @@ function init() {
   scene.background = new THREE.Color(0x151515);
 
   //bg audio
-  var audio = new Audio('../assets/sounds/bg1.mp3');
+  var audio = new Audio('./assets/sounds/bg1.mp3');
   audio.playbackRate = 0.5;
   audio.volume = 0.8;
   audio.loop = true;
