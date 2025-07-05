@@ -11,3 +11,5 @@ Refining camera controls (still working on this)
 
 **6/4 - 6/10**
 Added overlay to page load with instructions and finished current version of camera controls.
+
+**Log Moved to [log.txt](https://github.com/cthompto/a-walk-in-the-dark/blob/main/log.txt)**
