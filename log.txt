@@ -22,3 +22,6 @@ Added scene texts, a randomizer to select scene texts, and an end card.
 
 *6/25-6/30*
 Working on sound a color. Switched to color as default and added first pass at background sound/music.
+
+*7/1-7/5*
+Added more sound scapes, added sound randomizer, removed placeholder end text, and added inifinite looping.

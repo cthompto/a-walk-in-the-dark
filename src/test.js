@@ -217,7 +217,7 @@ function init(newCheck) {
   if (newCheck) {
     titleText(-100);
   } else if (!newCheck) {
-
+    repeatText(-100);
   }
   
 
@@ -555,6 +555,35 @@ function titleText(depthOffset) {
       });
 
       const message = " A Walk in The Dark";
+      const shapes = font.generateShapes(message, 40);
+      const fontGeo = new THREE.ShapeGeometry(shapes);
+      fontGeo.computeBoundingBox();
+      const xMid =
+        -0.5 * (fontGeo.boundingBox.max.x - fontGeo.boundingBox.min.x);
+      fontGeo.translate(xMid, 0, 0);
+      const text = new THREE.Mesh(fontGeo, fontMat);
+      text.position.z = 250 + depthOffset;
+      scene.add(text);
+    }
+  );
+}
+
+// repeat text
+
+function repeatText(depthOffset) {
+  // title text
+
+  const loader = new FontLoader();
+  loader.load(
+    "./assets/fonts/Public_Sans/Public Sans_Bold.json",
+    function (font) {
+      const fontColor = 0xffffff;
+      const fontMat = new THREE.LineBasicMaterial({
+        color: fontColor,
+        side: THREE.DoubleSide,
+      });
+
+      const message = ".  .  .";
       const shapes = font.generateShapes(message, 40);
       const fontGeo = new THREE.ShapeGeometry(shapes);
       fontGeo.computeBoundingBox();
