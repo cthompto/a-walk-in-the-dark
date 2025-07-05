@@ -14,6 +14,7 @@ import Stats from "three/addons/Stats.js";
 // global variables
 
 let audioOn,
+  audio,
   camera,
   cameraDirection,
   cameraMove,
@@ -151,9 +152,9 @@ var stats = new Stats();
 
 // scene start
 
-init();
+init(true);
 
-function init() {
+function init(newCheck) {
   // setup scene
 
   renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -175,10 +176,10 @@ function init() {
   scene.background = new THREE.Color(0x151515);
 
   //bg audio
-  
 
-  var audioNum = Math.floor(Math.random() * 3)+1;
-  var audio = new Audio('./assets/sounds/bg'+audioNum+'.mp3');
+  var audioNum = Math.floor(Math.random() * 3) + 1;
+  audio = new Audio("./assets/sounds/bg" + audioNum + ".mp3");
+  console.log(audio);
   audio.playbackRate = 0.5;
   audio.volume = 0.8;
   audio.loop = true;
@@ -198,7 +199,7 @@ function init() {
     chosen = true;
     if (cb.checked) {
       audio.play();
-      console.log('audio on');
+      console.log("audio on");
     }
   });
 
@@ -213,7 +214,12 @@ function init() {
   // scene wireframe structure
 
   //sceneStructure();
-  titleText(-100);
+  if (newCheck) {
+    titleText(-100);
+  } else if (!newCheck) {
+
+  }
+  
 
   // shuffle scenes
 
@@ -254,20 +260,20 @@ function init() {
 
   textSeed = getRandomInt(4);
 
-  if(textSeed == 0) {
+  if (textSeed == 0) {
     textStart = 0;
-  } else if(textSeed == 1) {
+  } else if (textSeed == 1) {
     textStart = 6;
-  } else if(textSeed == 2) {
+  } else if (textSeed == 2) {
     textStart = 12;
-  } else if(textSeed == 3) {
+  } else if (textSeed == 3) {
     textStart = 18;
   }
 
   sceneTexts();
 
   // end text
-  endText(-7000);
+  //endText(-7000);
 
   // orbit controls for debugging
 
@@ -393,7 +399,7 @@ function keyboardControls(e) {
       halftonePass.uniforms["greyscale"].value = true;
     }
   } else if (e.key == "l") {
-    console.log(renderer.log);
+    disposeGlobal();
   }
 }
 
@@ -416,6 +422,9 @@ function cameraAnimation() {
     cameraMove = false;
   } else {
     cameraMove = false;
+  }
+  if (camera.position.z <= -6500) {
+    disposeGlobal();
   }
 }
 
@@ -562,7 +571,6 @@ function titleText(depthOffset) {
 // end card
 
 function endText(depthOffset) {
-
   const loader = new FontLoader();
   loader.load(
     "./assets/fonts/Public_Sans/Public Sans_Bold.json",
@@ -596,7 +604,6 @@ function endText(depthOffset) {
       text1.position.z = 400 + depthOffset;
       text1.position.y = -50;
       scene.add(text1);
-
     }
   );
 }
@@ -604,7 +611,7 @@ function endText(depthOffset) {
 // texts
 
 function sceneTexts() {
-    const loader = new FontLoader();
+  const loader = new FontLoader();
   loader.load(
     "./assets/fonts/Public_Sans/Public Sans_Regular.json",
     function (font) {
@@ -628,7 +635,7 @@ function sceneTexts() {
       scene.add(text0);
 
       // second message
-      const message1 = writings[textStart+1];
+      const message1 = writings[textStart + 1];
       const shapes1 = font.generateShapes(message1, 25);
       const fontGeo1 = new THREE.ShapeGeometry(shapes1);
       fontGeo1.computeBoundingBox();
@@ -641,7 +648,7 @@ function sceneTexts() {
       scene.add(text1);
 
       // third message
-      const message2 = writings[textStart+2];
+      const message2 = writings[textStart + 2];
       const shapes2 = font.generateShapes(message2, 25);
       const fontGeo2 = new THREE.ShapeGeometry(shapes2);
       fontGeo2.computeBoundingBox();
@@ -653,7 +660,7 @@ function sceneTexts() {
       scene.add(text2);
 
       // fourth message
-      const message3 = writings[textStart+3];
+      const message3 = writings[textStart + 3];
       const shapes3 = font.generateShapes(message3, 25);
       const fontGeo3 = new THREE.ShapeGeometry(shapes3);
       fontGeo3.computeBoundingBox();
@@ -665,7 +672,7 @@ function sceneTexts() {
       scene.add(text3);
 
       // fifth message
-      const message4 = writings[textStart+4];
+      const message4 = writings[textStart + 4];
       const shapes4 = font.generateShapes(message4, 25);
       const fontGeo4 = new THREE.ShapeGeometry(shapes4);
       fontGeo4.computeBoundingBox();
@@ -678,7 +685,7 @@ function sceneTexts() {
       scene.add(text4);
 
       // sixth message
-      const message5 = writings[textStart+5];
+      const message5 = writings[textStart + 5];
       const shapes5 = font.generateShapes(message5, 25);
       const fontGeo5 = new THREE.ShapeGeometry(shapes5);
       fontGeo5.computeBoundingBox();
@@ -933,9 +940,9 @@ function stage3(depthOffset) {
   // newLight2.target = groundMain;
   // groundMain.add( newLight2 );
 
-//   let pointLight = new THREE.PointLight(0xfffffff, 20, 700, 0.2);
-//   pointLight.position.set(0, 0, 0 + depthOffset);
-//   scene.add(pointLight);
+  //   let pointLight = new THREE.PointLight(0xfffffff, 20, 700, 0.2);
+  //   pointLight.position.set(0, 0, 0 + depthOffset);
+  //   scene.add(pointLight);
 
   // outer lip
 
@@ -1273,6 +1280,25 @@ function shuffle(array) {
 
 function getRandomInt(max) {
   return Math.floor(Math.random() * max);
+}
+
+// dispose test
+
+function disposeGlobal() {
+  // dispose geometries and materials in scene
+  while (scene.children.length > 0) {
+    scene.remove(scene.children[0]);
+  }
+  //scene.dispose();
+  //composer.dispose();
+  //renderer.dispose();
+  audio.pause();
+  document.body.removeChild(renderer.domElement);
+  console.log("Dispose!");
+  init(false);
+  zTarget = 750;
+  audio.play();
+  console.log("Restart");
 }
 
 // degrees to radians
