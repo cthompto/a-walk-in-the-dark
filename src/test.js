@@ -116,7 +116,7 @@ let writings = [
   "Each dark corner and passage looms.",
   " ",
   "I want to loom there too,",
-  "with the dark as an unknown equal.",
+  "with the dark, as an unknown equal.",
   " ",
   " ",
   " ",
@@ -130,6 +130,12 @@ let writings = [
   "kicking and screaming",
   "into the burning violent light.",
   "No, I will stay here in darkness.",
+  "Dark, but not like the closet.",
+  " ",
+  "Instead",
+  " ",
+  "Dark like the ocean",
+  "like the other side of the moon.",
 ];
 
 // global settings
@@ -219,7 +225,6 @@ function init(newCheck) {
   } else if (!newCheck) {
     repeatText(-100);
   }
-  
 
   // shuffle scenes
 
@@ -258,7 +263,7 @@ function init(newCheck) {
 
   // texts
 
-  textSeed = getRandomInt(4);
+  textSeed = getRandomInt(5);
 
   if (textSeed == 0) {
     textStart = 0;
@@ -268,6 +273,8 @@ function init(newCheck) {
     textStart = 12;
   } else if (textSeed == 3) {
     textStart = 18;
+  } else if (textSeed == 4) {
+    textStart = 24;
   }
 
   sceneTexts();
@@ -382,7 +389,7 @@ function keyboardControls(e) {
     } else if (e.key == "s") {
       cameraDirection = "backward";
       zTarget = camera.position.z + 1000;
-      if(zTarget > 1750) {
+      if (zTarget > 1750) {
         zTarget = 1750;
       }
       console.log("s");
@@ -447,7 +454,7 @@ function halftoneEffect() {
   renderPass = new RenderPass(scene, camera);
   halftoneParams = {
     shape: 1,
-    radius: 10,
+    radius: 12,
     rotateR: Math.PI / 12,
     rotateB: (Math.PI / 12) * 2,
     rotateG: (Math.PI / 12) * 3,
