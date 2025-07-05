@@ -382,6 +382,9 @@ function keyboardControls(e) {
     } else if (e.key == "s") {
       cameraDirection = "backward";
       zTarget = camera.position.z + 1000;
+      if(zTarget > 1750) {
+        zTarget = 1750;
+      }
       console.log("s");
       console.log(zTarget);
     }
