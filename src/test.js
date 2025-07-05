@@ -454,7 +454,7 @@ function halftoneEffect() {
     scatter: 0.75,
     blending: 1,
     blendingMode: 1,
-    greyscale: false,
+    greyscale: true,
     disable: false,
   };
   halftonePass = new HalftonePass(

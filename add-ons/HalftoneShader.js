@@ -295,6 +295,10 @@ const HalftoneShader = {
 
 				if ( greyscale ) {
 					r = g = b = (r + b + g) / 3.0;
+					// chelsea modified greyscale
+					r = r - 0.2;
+					g = g - 0.5;
+					b = b + 0.1;
 				}
 
 				gl_FragColor = vec4( r, g, b, 1.0 );
