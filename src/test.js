@@ -381,12 +381,12 @@ function animate(timestamp) {
 function keyboardControls(e) {
   console.log("key logged");
   if (!cameraMove) {
-    if (e.key == "w") {
+    if (e.key == "w" || "ArrowUp") {
       zTarget = camera.position.z - 1000;
       cameraDirection = "forward";
       console.log("w");
       console.log(zTarget);
-    } else if (e.key == "s") {
+    } else if (e.key == "s" || "ArrowDown") {
       cameraDirection = "backward";
       zTarget = camera.position.z + 1000;
       if (zTarget > 1750) {
@@ -454,7 +454,7 @@ function halftoneEffect() {
   renderPass = new RenderPass(scene, camera);
   halftoneParams = {
     shape: 1,
-    radius: 12,
+    radius: 10,
     rotateR: Math.PI / 12,
     rotateB: (Math.PI / 12) * 2,
     rotateG: (Math.PI / 12) * 3,
