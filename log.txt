@@ -25,3 +25,6 @@ Working on sound a color. Switched to color as default and added first pass at b
 
 *7/1-7/5*
 Added more sound scapes, added sound randomizer, removed placeholder end text, and added inifinite looping.
+
+*7/6-7/7*
+Updated instructions, filter, and controls.
