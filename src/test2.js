@@ -2,13 +2,13 @@ import * as THREE from "three";
 //import { pass } from 'three/tsl';
 //import { DotScreenPass } from 'three/addons/DotScreenPass.js';
 import { FontLoader } from "three/addons/FontLoader.js";
-import { OrbitControls } from 'three/addons/OrbitControls.js';
+import { OrbitControls } from "three/addons/OrbitControls.js";
 import { LineMaterial } from "three/addons/LineMaterial.js";
 import { Wireframe } from "three/addons/Wireframe.js";
 import { WireframeGeometry2 } from "three/addons/WireframeGeometry2.js";
 import { EffectComposer } from "three/addons/EffectComposer.js";
 import { RenderPass } from "three/addons/RenderPass.js";
-import { HalftonePass } from "three/addons/HalftonePass.js";
+import { HalftonePass } from "three/addons/HalftonePass_print.js";
 import Stats from "three/addons/Stats.js";
 
 // global variables
@@ -150,10 +150,28 @@ let direction5 = true;
 var frameLengthMS = 1000 / 61; //60 fps
 var previousTime = 0;
 
-// print controls
+// print additions
 
-let fogLow = 150;
-let fogHigh = 1500;
+let fogLow = 1500;
+let fogHigh = 2000;
+let voidFrame2;
+
+var longPlane = new THREE.PlaneGeometry(1000, 500, 40, 20);
+var shortPlane = new THREE.PlaneGeometry(500, 500, 20, 20);
+
+let voidBack;
+let voidBottom;
+let voidTop;
+let voidLeft;
+let voidRight;
+let voidFront;
+let voidText;
+let text0;
+let text1;
+let text2;
+let text3;
+let text4;
+let text5;
 
 // stats
 
@@ -183,8 +201,8 @@ function init(newCheck) {
   camera.position.z = 750;
 
   scene = new THREE.Scene();
-  scene.fog = new THREE.Fog(0x000000, fogLow, fogHigh);
-  scene.background = new THREE.Color(0x151515);
+  scene.fog = new THREE.Fog(0xffffff, fogLow, fogHigh);
+  scene.background = new THREE.Color(0xffffff);
 
   //bg audio
 
@@ -238,33 +256,36 @@ function init(newCheck) {
 
   // stage 1 and objects
 
-  stage1(spaceArray[0]);
-  props1(spaceArray[0]);
+  //stage1(spaceArray[0]);
+  //props1(spaceArray[0]);
 
   // stage 2 and objects
 
-  stage2(spaceArray[1]);
-  props2(spaceArray[1]);
+  //stage2(spaceArray[1]);
+  //props2(spaceArray[1]);
 
   // stage 3 and objects
 
-  stage3(spaceArray[2]);
-  props3(spaceArray[2]);
+  //stage3(spaceArray[2]);
+  //props3(spaceArray[2]);
 
   // stage 4 and objects
 
-  stage4(spaceArray[3]);
-  props4(spaceArray[3]);
+  //stage4(spaceArray[3]);
+  //props4(spaceArray[3]);
 
   // stage 5 and objects
 
-  stage5(spaceArray[4]);
-  props5(spaceArray[4]);
+  //stage5(spaceArray[4]);
+  //props5(spaceArray[4]);
 
   // stage 6 and objects
 
-  stage6(spaceArray[5]);
-  props6(spaceArray[5]);
+  //stage6(spaceArray[5]);
+  //props6(spaceArray[5]);
+
+  // side stage
+  sideStage(-1500);
 
   // texts
 
@@ -282,15 +303,17 @@ function init(newCheck) {
     textStart = 24;
   }
 
-  sceneTexts();
+  sideStageprops(-1250);
+
+  //sceneTexts();
 
   // end text
   //endText(-7000);
 
   // orbit controls for debugging
 
-  controls = new OrbitControls( camera, renderer.domElement );
-  controls.listenToKeyEvents( window );
+  controls = new OrbitControls(camera, renderer.domElement);
+  controls.listenToKeyEvents(window);
   controls.enableDamping = false;
   controls.screenSpacePanning = false;
   controls.enableZoom = true;
@@ -355,11 +378,11 @@ function animate(timestamp) {
     /* your rendering logic goes here */
     // animations
 
-    animation1();
-    animation2();
-    animation3();
-    animation4();
-    animation5();
+    //animation1();
+    //animation2();
+    //animation3();
+    //animation4();
+    //animation5();
 
     // camera movement
     //controls.update();
@@ -413,9 +436,30 @@ function keyboardControls(e) {
     } else if (!halftonePass.uniforms["greyscale"].value) {
       halftonePass.uniforms["greyscale"].value = true;
     }
-  } else if (e.key == "l") {
-    disposeGlobal();
   }
+
+  if (e.key == "h") {
+    halftonePass.uniforms["radius"].value = halftonePass.uniforms["radius"].value-1;
+    if (halftonePass.uniforms["radius"].value <= 1) {
+      halftonePass.uniforms["radius"].value = 1;
+    }
+  } else if (e.key == "j") {
+    halftonePass.uniforms["radius"].value = halftonePass.uniforms["radius"].value+1;
+  }
+
+  if (e.key == "k") {
+    halftonePass.uniforms["scatter"].value = halftonePass.uniforms["scatter"].value-0.05;
+    if (halftonePass.uniforms["scatter"].value <= 0) {
+      halftonePass.uniforms["scatter"].value = 0;
+    }
+  } else if (e.key == "l") {
+    halftonePass.uniforms["scatter"].value = halftonePass.uniforms["scatter"].value+0.05;
+    if (halftonePass.uniforms["scatter"].value >= 1) {
+      halftonePass.uniforms["scatter"].value = 1;
+    }
+  }
+
+
   if (e.key == "1") {
     console.log("ping");
     fogLow = fogLow + 25;
@@ -428,13 +472,52 @@ function keyboardControls(e) {
     scene.fog.near = fogLow;
   } else if (e.key == "3") {
     fogHigh = fogHigh + 25;
-    scene.fog.far =fogHigh;
+    scene.fog.far = fogHigh;
   } else if (e.key == "4") {
     fogHigh = fogHigh - 25;
     if (fogHigh < 0) {
       fogHigh = 0;
     }
     scene.fog.far = fogHigh;
+  }
+  if (e.key == "i") {
+    if (voidBack.position.x == 0) {
+      voidBack.position.x = 4000;
+      voidTop.position.x = 4000;
+      voidBottom.position.x = 4000;
+      voidLeft.position.x = 3500;
+      voidRight.position.x = 4500;
+    } else {
+      voidBack.position.x = 0;
+      voidTop.position.x = 0;
+      voidBottom.position.x = 0;
+      voidLeft.position.x = -500;
+      voidRight.position.x = 500;
+    }
+  }
+  if (e.key == "o") {
+    if (voidFront.position.x == 0) {
+      voidFront.position.x = 4000;
+    } else {
+      voidFront.position.x = 0;
+    }
+  }
+  if (e.key =="p") {
+    if (text0.position.x == 0) {
+      text0.position.x = 4000;
+      text1.position.x = 4000;
+      text2.position.x = 4000;
+      text3.position.x = 4000;
+      text4.position.x = 4000;
+      text5.position.x = 4000;
+    } else {
+      text0.position.x = 0;
+      text1.position.x = 0;
+      text2.position.x = 0;
+      text3.position.x = 0;
+      text4.position.x = 0;
+      text5.position.x = 0;
+    }
   }
 }
 
@@ -1370,3 +1453,147 @@ function disposeGlobal() {
 // 180 = 3.14159
 
 //equation = Deg × π/180 = Rad
+
+// stage 5
+
+function sideStage(depthOffset) {
+  const voidPanel0 = new WireframeGeometry2(longPlane);
+  const voidPanel1 = new WireframeGeometry2(shortPlane);
+
+  //const geo = new THREE.BoxGeometry(1000, 500, 500, 40, 20, 20);
+
+  let voidLine2 = new LineMaterial({
+    color: 0x777777,
+    fog: true,
+    linewidth: 2, // in pixels
+    opacity: 0.75,
+    dashed: false,
+    transparent: true,
+  });
+
+  voidBack = new Wireframe(voidPanel0, voidLine2);
+  voidBack.computeLineDistances();
+  voidBack.position.set(0, 0, 0 + depthOffset);
+  scene.add(voidBack);
+
+  voidTop = new Wireframe(voidPanel0, voidLine2);
+  voidTop.computeLineDistances();
+  voidTop.position.set(0, 250, 250 + depthOffset);
+  voidTop.rotation.set(1.5708, 0, 0);
+  scene.add(voidTop);
+
+  voidBottom = new Wireframe(voidPanel0, voidLine2);
+  voidBottom.computeLineDistances();
+  voidBottom.position.set(0, -250, 250 + depthOffset);
+  voidBottom.rotation.set(1.5708, 0, 0);
+  scene.add(voidBottom);
+
+  voidLeft = new Wireframe(voidPanel1, voidLine2);
+  voidLeft.computeLineDistances();
+  voidLeft.position.set(-500, 0, 250 + depthOffset);
+  voidLeft.rotation.set(0, 1.5708, 0);
+  scene.add(voidLeft);
+
+  voidRight = new Wireframe(voidPanel1, voidLine2);
+  voidRight.computeLineDistances();
+  voidRight.position.set(500, 0, 250 + depthOffset);
+  voidRight.rotation.set(0, 1.5708, 0);
+  scene.add(voidRight);
+
+  voidFront = new Wireframe(voidPanel0, voidLine2);
+  voidFront.computeLineDistances();
+  voidFront.position.set(0, 0, 500 + depthOffset);
+  scene.add(voidFront);
+}
+
+function sideStageprops(depthOffset) {
+  const loader = new FontLoader();
+  loader.load(
+    "../assets/fonts/Public_Sans/Public Sans_Bold.json",
+    function (font) {
+      const fontColor = 0xffffff;
+      const fontMat = new THREE.LineBasicMaterial({
+        color: 0x000000,
+        side: THREE.DoubleSide,
+      });
+
+      // first message
+      const message0 = writings[textStart];
+      const shapes0 = font.generateShapes(message0, 35);
+      const fontGeo0 = new THREE.ShapeGeometry(shapes0);
+      fontGeo0.computeBoundingBox();
+      const xMid0 =
+        -0.5 * (fontGeo0.boundingBox.max.x - fontGeo0.boundingBox.min.x);
+      fontGeo0.translate(xMid0, 0, 0);
+      text0 = new THREE.Mesh(fontGeo0, fontMat);
+      text0.position.z = 0 + depthOffset;
+      text0.position.y = 160;
+      scene.add(text0);
+
+      // second message
+      const message1 = writings[textStart + 1];
+      const shapes1 = font.generateShapes(message1, 35);
+      const fontGeo1 = new THREE.ShapeGeometry(shapes1);
+      fontGeo1.computeBoundingBox();
+      const xMid1 =
+        -0.5 * (fontGeo1.boundingBox.max.x - fontGeo1.boundingBox.min.x);
+      fontGeo1.translate(xMid1, 0, 0);
+      text1 = new THREE.Mesh(fontGeo1, fontMat);
+      text1.position.z = 0 + depthOffset;
+      text1.position.y = 90;
+      scene.add(text1);
+
+      // third message
+      const message2 = writings[textStart + 2];
+      const shapes2 = font.generateShapes(message2, 35);
+      const fontGeo2 = new THREE.ShapeGeometry(shapes2);
+      fontGeo2.computeBoundingBox();
+      const xMid2 =
+        -0.5 * (fontGeo2.boundingBox.max.x - fontGeo2.boundingBox.min.x);
+      fontGeo2.translate(xMid2, 0, 0);
+      text2 = new THREE.Mesh(fontGeo2, fontMat);
+      text2.position.z = 0 + depthOffset;
+      text2.position.y = 20;
+      scene.add(text2);
+
+      // fourth message
+      const message3 = writings[textStart + 3];
+      const shapes3 = font.generateShapes(message3, 35);
+      const fontGeo3 = new THREE.ShapeGeometry(shapes3);
+      fontGeo3.computeBoundingBox();
+      const xMid3 =
+        -0.5 * (fontGeo3.boundingBox.max.x - fontGeo3.boundingBox.min.x);
+      fontGeo3.translate(xMid3, 0, 0);
+      text3 = new THREE.Mesh(fontGeo3, fontMat);
+      text3.position.z = 0 + depthOffset;
+      text3.position.y = -50;
+      scene.add(text3);
+
+      // fifth message
+      const message4 = writings[textStart + 4];
+      const shapes4 = font.generateShapes(message4, 35);
+      const fontGeo4 = new THREE.ShapeGeometry(shapes4);
+      fontGeo4.computeBoundingBox();
+      const xMid4 =
+        -0.5 * (fontGeo4.boundingBox.max.x - fontGeo4.boundingBox.min.x);
+      fontGeo4.translate(xMid4, 0, 0);
+      text4 = new THREE.Mesh(fontGeo4, fontMat);
+      text4.position.z = 0 + depthOffset;
+      text4.position.y = -120;
+      scene.add(text4);
+
+      // sixth message
+      const message5 = writings[textStart + 5];
+      const shapes5 = font.generateShapes(message5, 35);
+      const fontGeo5 = new THREE.ShapeGeometry(shapes5);
+      fontGeo5.computeBoundingBox();
+      const xMid5 =
+        -0.5 * (fontGeo5.boundingBox.max.x - fontGeo5.boundingBox.min.x);
+      fontGeo5.translate(xMid5, 0, 0);
+      text5 = new THREE.Mesh(fontGeo5, fontMat);
+      text5.position.z = 0 + depthOffset;
+      text5.position.y = -190;
+      scene.add(text5);
+    }
+  );
+}
