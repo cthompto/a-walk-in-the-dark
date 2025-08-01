@@ -381,12 +381,12 @@ function animate(timestamp) {
 function keyboardControls(e) {
   console.log("key logged");
   if (!cameraMove) {
-    if (e.key == "w" || "ArrowUp") {
+    if (e.key == "w" || e.key == "ArrowUp") {
       zTarget = camera.position.z - 1000;
       cameraDirection = "forward";
       console.log("w");
       console.log(zTarget);
-    } else if (e.key == "s" || "ArrowDown") {
+    } else if (e.key == "s" || e.key == "ArrowDown") {
       cameraDirection = "backward";
       zTarget = camera.position.z + 1000;
       if (zTarget > 1750) {
