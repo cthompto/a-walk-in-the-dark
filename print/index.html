@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>A Walk in The Dark - Chelsea Thompto</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌑</text></svg>"
+    />
+    <link rel="stylesheet" href="../style/style.css" />
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "../build/three.module.min.js",
+          "three/tsl": "../build/three.webgpu.min.js",
+          "three/addons/": "../add-ons/"
+        }
+      }
+    </script>
+    <script src="../add-ons/Stats.js" type="module"></script>
+    <script src="../src/test2.js" type="module"></script>
+  </head>
+  <body>
+    <div id="blocker">
+      <div id="instructions">
+        <br />
+        <h1>A Walk in The Dark</h1>
+        <p class="move-mid">Use the "W" key or up arrow to move forward.</p>
+        <p class="move-mid">Use the "S" key or down arrow to move backward.</p>
+        <p></p>
+        <p class="move-mid">This is a work in progress, you are about to view a preview build.</p>
+        <p class="move-mid">
+          For more information about the work, please email Chelsea Thompto at: <a href="mailto:chelseathomptoart@gmail.com">chelseathomptoart@gmail.com</a> 
+        </p>
+        <br /><br />
+        <button id="startButton">Click To Enter</button>
+        <label id="audioBox" for="audioCheck">Audio On: 
+        <input
+          type="checkbox"
+          id="audioCheck"
+          name="audioCheck"
+          checked="true"
+          value="on" />
+        </label>
+        <br /><br />
+      </div>
+    </div>
+    <!-- <h1>
+        Test Page
+    </h1> -->
+  </body>
+</html>
