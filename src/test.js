@@ -108,6 +108,11 @@ const stageMaterial01 = new THREE.MeshPhongMaterial({
 
 let spaceArray = [-1000, -2000, -3000, -4000, -5000, -6000];
 
+// array for text start
+
+let textArray = [0,6,12,18];
+let textIndex = 0;
+
 // array for texts
 let writings = [
   "When I transitioned, I was told",
@@ -151,8 +156,8 @@ var previousTime = 0;
 // stats
 
 var stats = new Stats();
-//stats.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
-//document.body.appendChild(stats.dom);
+// stats.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
+// document.body.appendChild(stats.dom);
 
 // scene start
 
@@ -221,13 +226,28 @@ function init(newCheck) {
   //sceneStructure();
   if (newCheck) {
     titleText(-100);
+    shuffle(textArray);
+    console.log("Text Order:")
+    console.log(textArray);
+    console.log("Current Start:" + textArray[textIndex]);
   } else if (!newCheck) {
+    if(textIndex < textArray.length-1) {
+      textIndex++;
+      console.log("Current Start:" + textArray[textIndex]);
+    } else {
+      shuffle(textArray);
+      textIndex = 0;
+      console.log("Text Order:")
+      console.log(textArray);
+      console.log("Current Start:" + textArray[textIndex]);
+    }
     //repeatText(-100);
   }
 
   // shuffle scenes
 
   shuffle(spaceArray);
+  console.log("Scene Order:");
   console.log(spaceArray);
 
   // stage 1 and objects
@@ -262,19 +282,21 @@ function init(newCheck) {
 
   // texts
 
-  textSeed = getRandomInt(4);
+  // textSeed = getRandomInt(4);
 
-  if (textSeed == 0) {
-    textStart = 0;
-  } else if (textSeed == 1) {
-    textStart = 6;
-  } else if (textSeed == 2) {
-    textStart = 12;
-  } else if (textSeed == 3) {
-    textStart = 18;
-  } else if (textSeed == 4) {
-    textStart = 24;
-  }
+  // if (textSeed == 0) {
+  //   textStart = 0;
+  // } else if (textSeed == 1) {
+  //   textStart = 6;
+  // } else if (textSeed == 2) {
+  //   textStart = 12;
+  // } else if (textSeed == 3) {
+  //   textStart = 18;
+  // } else if (textSeed == 4) {
+  //   textStart = 24;
+  // }
+
+  textStart = textArray[textIndex];
 
   sceneTexts();
 
@@ -306,8 +328,9 @@ function init(newCheck) {
   document.addEventListener("keyup", keyboardControls);
 
   // halftone effect
-
+  
   halftoneEffect();
+
 }
 
 // animation and render loop without frame rate lock
@@ -1384,6 +1407,8 @@ function disposeGlobal() {
   //scene.dispose();
   //composer.dispose();
   //renderer.dispose();
+  composer.dispose(renderPass);
+  composer.dispose(halftonePass);
   audio.pause();
   document.body.removeChild(renderer.domElement);
   console.log("Dispose!");
