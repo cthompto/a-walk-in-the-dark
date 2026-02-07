@@ -122,12 +122,6 @@ let writings = [
   "I want to loom there too,",
   "with the dark, as an unknown equal.",
   " ",
-  " ",
-  " ",
-  " ",
-  " ",
-  " ",
-  " ",
   "To known is not to be loved",
   "or respected.",
   "To be known is to be dragged",
@@ -228,7 +222,7 @@ function init(newCheck) {
   if (newCheck) {
     titleText(-100);
   } else if (!newCheck) {
-    repeatText(-100);
+    //repeatText(-100);
   }
 
   // shuffle scenes
@@ -268,7 +262,7 @@ function init(newCheck) {
 
   // texts
 
-  textSeed = getRandomInt(5);
+  textSeed = getRandomInt(4);
 
   if (textSeed == 0) {
     textStart = 0;
@@ -438,7 +432,7 @@ function cameraAnimation() {
   } else {
     cameraMove = false;
   }
-  if (camera.position.z <= -6500) {
+  if (camera.position.z <= -7000) {
     disposeGlobal();
   }
 }
@@ -483,7 +477,7 @@ function halftoneEffect() {
 function sceneStructure() {
   // lower plane
 
-  plane = new THREE.PlaneGeometry(1000, 5500, 40, 200);
+  plane = new THREE.PlaneGeometry(1000, 7500, 40, 200);
   planeFrame = new WireframeGeometry2(plane);
   planeMat = new LineMaterial({
     color: 0xffffff,
@@ -496,7 +490,7 @@ function sceneStructure() {
   planeWire = new Wireframe(planeFrame, planeMat);
   planeWire.computeLineDistances();
   planeWire.scale.set(1, 1, 1);
-  planeWire.position.set(0, -255, -3000);
+  planeWire.position.set(0, -255, -4000);
   planeWire.rotation.set(1.5708, 0, 0);
   scene.add(planeWire);
 
