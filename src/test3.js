@@ -46,6 +46,10 @@ let audioOn,
   wireframe,
   wireframe2,
   wireframe3,
+  wireframe4,
+  wireframe5,
+  wireframe6,
+  wireframe7,
   zTarget;
 
 // global shapes
@@ -218,6 +222,7 @@ function init(newCheck) {
   scene.add(light);
 
   // scene wireframe structure
+  sceneStructure()
 
   //sceneStructure();
   if (newCheck) {
@@ -253,8 +258,8 @@ function init(newCheck) {
 
   // stage 5 and objects
 
-  stage5(-5000);
-  props5(-5000);
+  stage5(-6000);
+  props5(-6000);
 
   // stage 6 and objects
 
@@ -478,7 +483,7 @@ function halftoneEffect() {
 function sceneStructure() {
   // lower plane
 
-  plane = new THREE.PlaneGeometry(1000, 2500, 40, 100);
+  plane = new THREE.PlaneGeometry(1000, 5500, 40, 200);
   planeFrame = new WireframeGeometry2(plane);
   planeMat = new LineMaterial({
     color: 0xffffff,
@@ -491,21 +496,39 @@ function sceneStructure() {
   planeWire = new Wireframe(planeFrame, planeMat);
   planeWire.computeLineDistances();
   planeWire.scale.set(1, 1, 1);
-  planeWire.position.set(0, -255, -1000);
+  planeWire.position.set(0, -255, -3000);
   planeWire.rotation.set(1.5708, 0, 0);
   scene.add(planeWire);
+
+
+  // old line colors
+    //   matLine = new LineMaterial({
+    //     color: 0xff00ff,
+    //     linewidth: 2, // in pixels
+    //     opacity: 0.2,
+    //     dashed: false,
+    //     transparent: true,
+    //   });
+
+    //   matLine2 = new LineMaterial({
+    //     color: 0xffff00,
+    //     linewidth: 2, // in pixels
+    //     opacity: 0.2,
+    //     dashed: false,
+    //     transparent: true,
+    //   });
+
+    //   matLine3 = new LineMaterial({
+    //     color: 0x00ffff,
+    //     linewidth: 2, // in pixels
+    //     opacity: 0.2,
+    //     dashed: false,
+    //     transparent: true,
+    //   });
 
   // first box
 
   const geometry2 = new WireframeGeometry2(geo);
-
-  matLine = new LineMaterial({
-    color: 0xff00ff,
-    linewidth: 2, // in pixels
-    opacity: 0.2,
-    dashed: false,
-    transparent: true,
-  });
 
   wireframe = new Wireframe(geometry2, planeMat);
   wireframe.computeLineDistances();
@@ -515,14 +538,6 @@ function sceneStructure() {
   // second box
 
   const geometry3 = new WireframeGeometry2(geo);
-
-  matLine2 = new LineMaterial({
-    color: 0xffff00,
-    linewidth: 2, // in pixels
-    opacity: 0.2,
-    dashed: false,
-    transparent: true,
-  });
 
   wireframe2 = new Wireframe(geometry3, planeMat);
   wireframe2.computeLineDistances();
@@ -534,19 +549,43 @@ function sceneStructure() {
 
   const geometry4 = new WireframeGeometry2(geo);
 
-  matLine3 = new LineMaterial({
-    color: 0x00ffff,
-    linewidth: 2, // in pixels
-    opacity: 0.2,
-    dashed: false,
-    transparent: true,
-  });
-
   wireframe3 = new Wireframe(geometry4, planeMat);
   wireframe3.computeLineDistances();
   wireframe3.scale.set(1, 1, 1);
   wireframe3.position.set(0, 0, -2000);
   scene.add(wireframe3);
+
+  // fourth box
+
+  wireframe4 = new Wireframe(geometry4, planeMat);
+  wireframe4.computeLineDistances();
+  wireframe4.scale.set(1, 1, 1);
+  wireframe4.position.set(0, 0, -3000);
+  scene.add(wireframe4);
+
+  // fifth box
+
+  wireframe5 = new Wireframe(geometry4, planeMat);
+  wireframe5.computeLineDistances();
+  wireframe5.scale.set(1, 1, 1);
+  wireframe5.position.set(0, 0, -4000);
+  scene.add(wireframe5);
+
+  // sixth box
+
+  wireframe6 = new Wireframe(geometry4, planeMat);
+  wireframe6.computeLineDistances();
+  wireframe6.scale.set(1, 1, 1);
+  wireframe6.position.set(0, 0, -5000);
+  scene.add(wireframe6);
+
+  // seventh box
+
+  wireframe7 = new Wireframe(geometry4, planeMat);
+  wireframe7.computeLineDistances();
+  wireframe7.scale.set(1, 1, 1);
+  wireframe7.position.set(0, 0, -6000);
+  scene.add(wireframe7);
 }
 
 // title card
@@ -1267,33 +1306,52 @@ function stage6(depthOffset) {}
 
 function props6(depthOffset) {
   let block = new THREE.BoxGeometry(1, 1, 1);
-
-  for (let i = 0; i < 100; i++) {
+  
+  for (let i = 0; i < 50; i++) {
     let mesh;
+    for (let j = 0; j < 33; j++) {
+        
 
-    if (i % 3 == 0) {
-      mesh = new THREE.Mesh(block, stageMaterial1);
-    } else {
-      mesh = new THREE.Mesh(block, stageMaterial0);
-    }
-
-    if (i < 50) {
+        if (i % 3 == 0) {
+        mesh = new THREE.Mesh(block, stageMaterial1);
+        } else {
+        mesh = new THREE.Mesh(block, stageMaterial0);
+        }
+        if (i < 25) {
       mesh.position.set(
-        Math.random() * 300 + 100,
-        Math.random() * 470 - 240,
-        -215 + depthOffset
+        i*15 + 100,
+        j*15 - 240,
+        0 + depthOffset
       );
     } else {
       mesh.position.set(
-        Math.random() * 300 - 400,
-        Math.random() * 470 - 240,
-        -215 + depthOffset
+        i*15 - 850,
+        j*15 - 240,
+        0 + depthOffset
       );
     }
-
-    mesh.scale.x = mesh.scale.y = Math.random() * 100 + 50;
-    mesh.scale.z = Math.random() * 100 + 100;
+    mesh.scale.x = mesh.scale.y = 5;
+    if(i<10 || i>40) {
+        mesh.scale.z = 100;
+    } else if(i>=10 && i<20 || i>30 && i<=40){
+        mesh.scale.z = 200;
+    } else {
+        mesh.scale.z = 300;
+    }
+   
     scene.add(mesh);
+    }
+    // let mesh;
+
+    // if (i % 3 == 0) {
+    //   mesh = new THREE.Mesh(block, stageMaterial1);
+    // } else {
+    //   mesh = new THREE.Mesh(block, stageMaterial0);
+    // }
+
+    
+
+    
   }
 }
 
