@@ -24,7 +24,12 @@ Added scene texts, a randomizer to select scene texts, and an end card.
 Working on sound a color. Switched to color as default and added first pass at background sound/music.
 
 *7/1-7/5*
-Added more sound scapes, added sound randomizer, removed placeholder end text, and added inifinite looping.
+Added more sound scapes, added sound randomizer, removed placeholder end text, and added infinite looping.
 
 *7/6-7/7*
 Updated instructions, filter, and controls.
+
+Revision 2026 Log
+
+Early Feb:
+Revising scene 6 as I am unhappy with it compared to the others. Revising for Fall 2026 screening
