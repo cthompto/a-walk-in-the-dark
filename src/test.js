@@ -1262,6 +1262,7 @@ function animation5() {
 
 // stage 6
 
+// add new scene here 2/7
 function stage6(depthOffset) {}
 
 function props6(depthOffset) {
