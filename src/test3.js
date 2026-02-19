@@ -128,7 +128,7 @@ let writings = [
   " ",
   " ",
   " ",
-  "To known is not to be loved",
+  "To be known is not to be loved",
   "or respected.",
   "To be known is to be dragged",
   "kicking and screaming",

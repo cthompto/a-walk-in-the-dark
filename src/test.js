@@ -127,7 +127,7 @@ let writings = [
   "I want to loom there too,",
   "with the dark, as an unknown equal.",
   " ",
-  "To known is not to be loved",
+  "To be known is not to be loved",
   "or respected.",
   "To be known is to be dragged",
   "kicking and screaming",
