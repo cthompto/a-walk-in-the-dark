@@ -162,7 +162,7 @@ let rotMove4 = false;
 let direction4 = true;
 let directionB4 = true;
 let direction5 = true;
-var frameLengthMS = 1000 / 61; //60 fps
+var frameLengthMS = 1000 / 30; //30 fps
 var previousTime = 0;
 
 // stats
@@ -294,42 +294,9 @@ function init(newCheck) {
 
   // texts
 
-  // textSeed = getRandomInt(4);
-
-  // if (textSeed == 0) {
-  //   textStart = 0;
-  // } else if (textSeed == 1) {
-  //   textStart = 6;
-  // } else if (textSeed == 2) {
-  //   textStart = 12;
-  // } else if (textSeed == 3) {
-  //   textStart = 18;
-  // } else if (textSeed == 4) {
-  //   textStart = 24;
-  // }
-
   textStart = textArray[textIndex];
 
   sceneTexts();
-
-  // end text
-  //endText(-7000);
-
-  // orbit controls for debugging
-
-  // controls = new OrbitControls( camera, renderer.domElement );
-  // controls.listenToKeyEvents( window );
-  // controls.enableDamping = false;
-  // controls.screenSpacePanning = false;
-  // controls.enableZoom = true;
-  // controls.enablePan = false;
-  // // controls.minZoom = 0;
-  // // controls.maxDistance = 0;
-  // controls.minPolarAngle = Math.PI * 0.47;
-  // controls.maxPolarAngle = Math.PI * 0.53;
-  // controls.minAzimuthAngle = (Math.PI*4) * 0.49;
-  // controls.maxAzimuthAngle = (Math.PI*4) * 0.51;
-  // controls.update();
 
   // window resizer
 
@@ -345,43 +312,12 @@ function init(newCheck) {
 
 }
 
-// animation and render loop without frame rate lock
-
-/*
-function animate() {
-
-    stats.begin();
-    //console.log(camera.position.z);
-    // animations
-    
-    animation1();
-    animation2();
-    animation3();
-    animation4();
-    animation5();
-
-    // camera movement
-    //controls.update();
-    cameraAnimation();
-    
-    // render
-    if (filterToggle) {
-        composer.render( scene, camera );
-    } else if (!filterToggle) {
-        renderer.render( scene, camera );
-    }
-
-    stats.end();
-    
-}
-*/
-
 // animation and render loop with frame rate lock
 
 function animate(timestamp) {
   stats.begin();
   if (timestamp - previousTime > frameLengthMS) {
-    /* your rendering logic goes here */
+
     // animations
 
     animation1();
@@ -402,10 +338,9 @@ function animate(timestamp) {
     }
     /* * * * */
     previousTime = timestamp;
+    requestAnimationFrame(animate);
     stats.end();
   }
-
-  requestAnimationFrame(animate);
 }
 
 // user interaction and effects functions
@@ -1413,6 +1348,15 @@ function getRandomInt(max) {
 
 function disposeGlobal() {
   // dispose geometries and materials in scene
+
+  scene.traverse(function(obj) {
+    // dispose geometry
+    if (obj.geometry) {
+        obj.geometry.dispose();
+    }
+    console.log('disposed of: '+obj)
+});
+
   while (scene.children.length > 0) {
     scene.remove(scene.children[0]);
   }
