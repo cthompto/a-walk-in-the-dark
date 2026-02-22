@@ -143,7 +143,7 @@ let writings = [
   "in the dark.",
   "If, like me you wish",
   " ",
-  "for different way to be",
+  "for a different way to be",
   "and relate to one another.",
   "Walking in the dark",
   "my heart calms",
