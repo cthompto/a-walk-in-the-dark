@@ -110,7 +110,7 @@ let spaceArray = [-1000, -2000, -3000, -4000, -5000, -6000];
 
 // array for text start
 
-let textArray = [0,6,12,18];
+let textArray = [0,6,12,18,24,30];
 let textIndex = 0;
 
 // array for texts
@@ -139,6 +139,18 @@ let writings = [
   " ",
   "Dark like the ocean",
   "like the other side of the moon.",
+  "Come, join me here",
+  "in the dark.",
+  "If, like me you wish",
+  " ",
+  "for different way to be",
+  "and relate to one another.",
+  "Walking in the dark",
+  "my heart calms",
+  "and my eyes adjust.",
+  "The darkness",
+  "wraps itself around me",
+  "like a warm embrace."
 ];
 
 // global settings
