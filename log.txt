@@ -33,3 +33,6 @@ Revision 2026 Log
 
 Early Feb:
 Revising scene 6 as I am unhappy with it compared to the others. Revising for Fall 2026 screening
+
+Mid Feb:
+Moved to version 1.0 after I added 2 additional poems, refined title screen, and disabled debug controls.
