@@ -119,7 +119,7 @@ let writings = [
   "that the night was no longer mine.",
   "That I should avoid going out alone",
   "in the dark.",
-  "But I want it back, my late walks",
+  "But I want it back; my late walks",
   "in the dark.",
   "Every unknown is tinged with fear.",
   "Each dark corner and passage looms.",
