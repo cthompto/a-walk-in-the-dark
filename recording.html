@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>A Walk in The Dark - Chelsea Thompto</title>
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌑</text></svg>"
+    />
+    <link rel="stylesheet" href="./style/style.css" />
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "./build/three.module.min.js",
+          "three/tsl": "./build/three.webgpu.min.js",
+          "three/addons/": "./add-ons/"
+        }
+      }
+    </script>
+    <script src="./add-ons/Stats.js" type="module"></script>
+    <script src="./src/auto-move.js" type="module"></script>
+  </head>
+  <body>
+    <div id="blocker">
+      <div id="instructions">
+        <br />
+        <h1>A Walk in The Dark (Recording Version)</h1>
+        <h2>By Chelsea Thompto</h2>
+        <h3>Instructions:</h3>
+        <p class="move-mid">This piece is composed of six poems each with six lines, the poems are displayed across a variety of repeating spaces. When one poem ends another is randomly chosen. Move through the poems using your keyboard:</p>
+        <ul>
+        <li>Use the "W" key or Up Arrow to move forward.</li>
+        <li>Use the "S" key or Down Arrow to move backward.</li>
+        </ul>
+        <button id="startButton">Click To Enter</button>
+        <label id="audioBox" for="audioCheck">Audio On: 
+        <input
+          type="checkbox"
+          id="audioCheck"
+          name="audioCheck"
+          checked="true"
+          value="on" />
+        </label>
+        <h3><a href="https://chelsea.technology/projects/a_walk.html">Project Overview</a></h3>
+        <h3>More Info:</h3>
+        <p class="move-mid">All visual, audio, and text elements of the work were created by <a href="https://chelsea.technology/">Chelsea Thompto</a>. This is an evolving artwork, you are about to view the first complete iteration (version 1.0). For more information about the work, please email Chelsea Thompto at: <a href="mailto:chelseathomptoart@gmail.com">chelseathomptoart@gmail.com</a> 
+        </p>
+        <br /><br />
+      </div>
+    </div>
+    <!-- <h1>
+        Test Page
+    </h1> -->
+  </body>
+</html>
