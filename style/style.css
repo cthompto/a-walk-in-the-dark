@@ -7,11 +7,40 @@ body {
 h1 {
   font-family: monospace;
   color: #ffffff;
+  font-size: 50px;
+  margin-bottom: 10px;
+  font-weight: bold;
 }
+
+h2 {
+  font-family: monospace;
+  color: #ffffff;
+}
+
+h3 {
+  font-family: monospace;
+  color: #ffffff;
+}
+
 
 p {
   font-family: monospace;
   color: #ffffff;
+  max-width: 1000px;
+  text-align: left;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+ul {
+  text-align: left;
+}
+
+li {
+  font-family: monospace;
+  color: #ffffff;
+  max-width: 1000px;
+  text-align: left;
 }
 
 a, a:visited {
@@ -37,7 +66,6 @@ a, a:visited {
 
   text-align: center;
   font-size: 18px;
-  cursor: pointer;
 }
 
 .move-mid {
@@ -50,19 +78,19 @@ a, a:visited {
   border: 1px solid white;
   color: #ffffff;
   background-color: black;
-  margin-top: 5%;
-  margin-bottom: 5%;
+  margin-top: 10px;
   padding: 2.5%;
   font-size: 150%;
   font-weight: 800;
   font-family: monospace;
   border-radius: 2%;
   opacity: 0.9;
+  cursor: pointer;
 }
 
 #audioBox {
   font-family: monospace;
   color: #ffffff;
   display: block;
-  margin-bottom: 5%;
+  margin-top: 10px;
 }
