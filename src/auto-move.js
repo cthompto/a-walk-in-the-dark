@@ -243,7 +243,7 @@ function init(newCheck) {
     console.log("Text Order:");
     console.log(textArray);
     console.log("Current Start:" + textArray[textIndex]);
-    cameraDelay = 600;
+    cameraDelay = 1000;
   } else if (!newCheck) {
     cameraDelay = 400;
     if (textIndex < textArray.length - 1) {
