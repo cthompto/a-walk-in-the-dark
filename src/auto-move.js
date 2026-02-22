@@ -169,8 +169,8 @@ var previousTime = 0;
 // stats
 
 var stats = new Stats();
-// stats.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
-// document.body.appendChild(stats.dom);
+stats.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
+document.body.appendChild(stats.dom);
 
 // scene start
 
@@ -399,13 +399,8 @@ function animate(timestamp) {
     //controls.update();
     cameraAnimation();
 
-    // render
-    if (filterToggle) {
-      composer.render(scene, camera);
-    } else if (!filterToggle) {
-      renderer.render(scene, camera);
-    }
-    /* * * * */
+    composer.render(scene, camera);
+  
     previousTime = timestamp;
     stats.end();
   }
@@ -463,8 +458,6 @@ function cameraAnimation() {
       cameraDelay = 400;
     }
   }
-  console.log(cameraDelay);
-  console.log(cameraMove);
   if (cameraDirection == "forward") {
     if (camera.position.z >= zTarget) {
       camera.position.set(0, 0, camera.position.z - 3);
@@ -1407,9 +1400,18 @@ function getRandomInt(max) {
 
 function disposeGlobal() {
   // dispose geometries and materials in scene
-  while (scene.children.length > 0) {
-    scene.remove(scene.children[0]);
-  }
+
+  scene.traverse(function(obj) {
+    // dispose geometry
+    if (obj.geometry) {
+        obj.geometry.dispose();
+    }
+    console.log('disposed of: '+obj)
+});
+
+while (scene.children.length > 0) {
+     scene.remove(scene.children[0]);
+   }
   //scene.dispose();
   //composer.dispose();
   //renderer.dispose();
