@@ -1,7 +1,7 @@
 # A Walk in the Dark (version 1.0)
 ## Overview
 An online 3D interactive exploration of visibility and power. Inspired by tunnel books and built using HTML, CSS, and JavaScript(Three.js). This is an evolving artwork.
-More about the proejct can be found here:
+More about the project can be found here:
 [Project Website](https://chelsea.technology/projects/a_walk.html)
 ## Timeline
 - Development Phase: November 2024 - January 2026
